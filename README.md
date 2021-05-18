@@ -85,8 +85,8 @@ TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' a
 
     $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
     
-# Results output
-All relationships will be written to the 7-column file 'TKGWV2_Results.txt':
+# Results and interpretation
+All relationships will be written to a 7-column file named 'TKGWV2_Results.txt':
 
     Sample1	Sample2	Used_SNPs	HRC	counts0	counts4	Relationship
     Ind1	Ind2	17260	0.2248	1256	16004	1st degree
@@ -101,7 +101,7 @@ counts0 - Number of non-shared alleles<br/>
 counts4 - Number of shared alleles<br/>
 Relationship - Descriptive relationship based on HRC value
 
-
+TKGWV2 is only able to identify 1st and 2nd degree relationships.................
 
 
    
