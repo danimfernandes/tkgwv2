@@ -15,10 +15,16 @@ TKGWV2 was developed for Linux. The user is required to have the following softw
 - R (tested on version 3+)
 - R package: data.table (install.packages("data.table"))
 
-## Installation
-You will need two sets of files to run TKGWV2. First, download this package here from Github, and a set of large support files from here:
+## Installation and usage
+There is no installation required for TKGWV2. All you need to do is download and unzip this package. Keep the folder structure and make sure that all Python and R scripts are executable.
+
+
+
+
+You will need two sets of files to run TKGWV2. First, download and unzip this package to a folder of your choice. Then, download the set of support files from:
 https://drive.google.com/drive/folders/1Aw-0v_7CUorHJOLpCJ0QVCwEdH43HlO4?usp=sharing
 
+The set of support files were tested in the original publication of TKGWV2 and shown to work on any ancient population from Europe
 
 
 
