@@ -5,7 +5,8 @@
 TKGWV2 is a pipeline to estimate biological relatedness between individuals specifically aimed at ultra-low coverage ancient DNA data obtained from whole genome sequencing.
 It is a massive update to the original TKrelated method published in 2017 (Fernandes et al.), with ease of use and efficiency as major concerns.
 From the initial suggested minimum coverage threshold of 0.1X, TKGWV2 can be applied to BAM files of individuals with 0.025X, or, in some cases, as little as 0.005X when the other individual has above 0.03X. These characteristics have the potential to offer relatedness estimation during screening sequencing steps at early stages of an ancient DNA project, and can therefore be very useful for project planning.
-Although mainly designed for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture dataset, as long as allele frequencies are provided.
+
+Although mainly designed for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as allele frequencies are provided.
 
 ## Requirements
 TKGWV2 was developed for Linux. The user is required to have the following software available as a system-wide installation:
@@ -15,8 +16,20 @@ TKGWV2 was developed for Linux. The user is required to have the following softw
 - R (tested on version 3+)
 - R package: data.table (install.packages("data.table"))
 
+As input, TKGWV2 can take either individual BAM or text-PLINK files (ped/map).
+
 ## Installation and usage
-There is no installation required for TKGWV2. All you need to do is download and unzip this package. Keep the folder structure and make sure that all Python and R scripts are executable.
+There is no installation required for TKGWV2. Just download and unzip this package. Keep the folder structure and make sure that all Python and R scripts are executable.
+The TKGWV2 pipeline is divided in two main parts:
+- Generating text Pileup information from aligned BAM files and converting it to text-PLINK (ped/map)
+- Generating pairwise transposed text-PLINK (tped) and allele frequency (frq) files
+
+This allows TKGWV2 to take as input either individual BAM or text-PLINK files.
+
+
+
+![alt text](https://github.com/danimfernandes/tkgwv2/blob/master/tkgwv2_pipeline.png?raw=true)
+
 
 
 
