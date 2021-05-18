@@ -48,7 +48,7 @@ With these files, TKGWV2 will generate a set of text-PLINK files (ped/map) per i
 We provide a sample set of these support files that can be downloaded from here:
 https://drive.google.com/drive/folders/1Aw-0v_7CUorHJOLpCJ0QVCwEdH43HlO4?usp=sharing
 
-Crucially, the allele frequencies provided must be representative of the populations the ancient individuals being tested belong to. Although the files we provide were generated using modern European CEU data from the 1000 Genomes Project Phase 3, we showed in the original publication of TKGWV2 that they work well for ancient populations from Europe spanning from the Neolithic to Medieval times.
+Crucially, the allele frequencies provided must be representative of the populations the ancient individuals being tested belong to. Although the files we provide were generated using modern European CEU data from the 1000 Genomes Project Phase 3, we showed in the original publication of TKGWV2 that they work well for ancient populations from Europe spanning from the Neolithic to Medieval times. Due to this extensive geographical and temporal working window, you can, for example, use TKGWV2 on a pair of individuals from a Neolithic site in Poland at the same time that you use it for a Bronze Age pair from Spain.
 
 For other untested regions and chronologies, or if you wish to use a different set of SNPs, it is very important to run a confirmation analysis on pairs of individuals with previously known relationships, to make sure that the used allele frequencies are not introducing any biases. Further below we provide a walkthrough for generating your own support files, in 'Generating own support files'.
 
@@ -74,7 +74,7 @@ TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' a
         [mandatory arguments]
         - f, --freqFile                   <path> Allele frequencies file in PLINK format (FRQ) containing the same SNPs (or a subset) of the ones in the input PED/MAP files
         [optional arguments]
-        - d, --dyads                      <path> Tab-spaced text file with each pair to be analysed per line, otherwise will run on every possible pair
+        - d, --dyads                      <path> Tab-spaced text file with each specified pair to be analysed per line, otherwise will run on every possible pair. Useful when analysing temporal or geographically distant pairs (as long as both are within the variation captured by the --freqFile)
         - i, --ignoreThresh               <int> Default 1. Threshold for the minimum number of SNPs allowed to estimate relatedness
 
 ### Example 1 - Starting from BAM files and running 'bam2plink' and then 'plink2tkrelated':
@@ -104,7 +104,21 @@ Relationship - Descriptive relationship based on HRC value
 TKGWV2 is only able to identify 1st and 2nd degree relationships.................
 
 
-   
+# Tips and suggestions
+- *Downsample your data*<br/>
+In the TKGWV2 publication, we showed that from 15000 used SNPs the error rates were under 0.50%, therefore one of our main suggestions is to downsample your data for a more time-efficient analyses. When starting from BAM files, we showed that downsampling them to a maximum of 1.3-1.6 million reads was sufficient to obtain an average of 23000 used SNPs per pair, and consequently run TKGWV2 with very low error rates at a much higher speed than if larger BAM files were to be used.
+
+- *Use simulations to get posterior probabilities for <15000 or <10000 SNPs*<br/>
+Although at 10000 SNPs the estimated error rates when using the provided support files are at around 3%, we provide a helper script to run simulations on the specific set of SNPs used to estimate that pair's relatedness. This information is contained in the files named as 'commInd1_Ind2.frq'.<br/><br/>
+The simulations will generate distribution ranges for the 3 relatedness classes, and use them them to calculate the probability of the pair's estimate to represent each class.<br/><br/>
+The R script for this, 'distSimulations.R', can be found in the folder 'helpers'.<br/><br/>
+The 10-15000 SNPs thresold was identified for the genome wide data set based on shotgun data, which likely includes less-informative variants than, for example, the curated 1240K SNP set. Consequently, for the latter, the minimum number of SNPs that would correspond to similar error rates should be substantially lower. On an updated version of TKGWV2 we will include information on error rates and thresholds for the 1240K dataset.
+
+- *Always run confirmation analysis for previously untested datasets and frequencies*<br/>
+As mentioned above, it is important that the allele frequencies provided properly reflect the genetic composition of the ancient population the individuals being tested belonged to. Whether you use closely related modern populations or a large set of ancient individuals to obtain allele frequencies from, make sure to confirm that those frequencies are appropriate by testing the pipeline on previously published individuals from the same (or minimally closely related) population with known relationships.<br/><br/>
+This is an important caveat that needs to be considered, and might prove challenging for regions or periods for which there is a lack of published ancient relatives. <br/><br/>
+However, with the ongoing exponential increase in availability of both modern and aDNA data around the world, TKGWV2 can potentially be applied to the great majority of situations.<br/>
+
    
    
    
@@ -113,6 +127,7 @@ TKGWV2 is only able to identify 1st and 2nd degree relationships................
 # Generation of own support files
 - PLINK frequency file was generated from 1000 Genomes Phase 3 CEU population. The only QC step required is to exclude fixed SNPs, reducing from 77 to 22 million variants
 (maybe have default EUR files, where both the BED file and FRQ file have no fixed SNPs, will make things much faster)
+- ................................................
 
 
 
