@@ -1,8 +1,20 @@
 # TKGWV2
 # An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data
 
-## Citation
-Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data (2021). Preprint.
+## Description
+TKGWV2 is a pipeline to estimate biological relatedness between individuals specifically aimed at ultra-low coverage ancient DNA data obtained from whole genome sequencing.
+It is a massive update to the original TKrelated method published in 2017 (Fernandes et al.), with ease of use and efficiency as major concerns.
+From the initial suggested minimum coverage threshold of 0.1X, TKGWV2 can be applied to individuals with 0.025X, or, in some cases, as little as 0.005X when the other individual has above 0.03X. These characteristics have the potential to offer relatedness estimation during screening sequencing steps at early stages of an ancient DNA project, and can therefore be very useful for project planning.
+
+## Requirements
+TKGWV2 was developed for Linux systems. The user is required to have the following software available as a system-wide installation:
+- Python 3
+- PLINK 1.9
+- samtools (tested on version 1.7)
+- R (tested on version 3+)
+- R package: data.table (install.packages("data.table"))
+
+
 
 
 
@@ -61,3 +73,9 @@ https://drive.google.com/drive/folders/1Aw-0v_7CUorHJOLpCJ0QVCwEdH43HlO4?usp=sha
 # - pairwise FRQ
 # Output:
 # - pairwise relatedness coefficient result text file  
+
+
+
+
+## Citation
+Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data (2021). Preprint.
