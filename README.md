@@ -1,6 +1,6 @@
 # TKGWV2
 # An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data
-***
+
 ## Citation
 Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data (2021). Preprint.
 
