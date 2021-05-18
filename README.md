@@ -13,6 +13,6 @@ An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun 
 
 
 
-You can access the support files for the genome-wide approach and also for 1240K data from here:
+You can access support files to run TKGWV2 from genome-wide BAM files and from 1240K data from here:
 https://drive.google.com/drive/folders/1Aw-0v_7CUorHJOLpCJ0QVCwEdH43HlO4?usp=sharing
 
