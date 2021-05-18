@@ -8,7 +8,7 @@ From the initial suggested minimum coverage threshold of 0.1X, TKGWV2 can be app
 
 These characteristics have the potential to offer relatedness estimation during screening sequencing steps at early stages of an ancient DNA project, and can therefore be very useful for project planning.
 
-Although mainly designed for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as allele frequencies are provided.
+Although mainly designed for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided.
 
 # Requirements
 TKGWV2 was developed for Linux. The following software needs to be available as system-wide installations:
