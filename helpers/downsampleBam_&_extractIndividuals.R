@@ -1,15 +1,15 @@
 
-### Downsize BAM files for faster analysis
-subsampleN = 1500000    # Maximum number of reads
+### Downsample BAM files for faster analysis
+downsampleN = 1500000    # Maximum number of reads
 
 for(i in list.files(getwd(),pattern = "\\.bam$")) {   # Edit this line and next if you want to target only BAMS with a more specific extension/suffix than ".bam"
   sid = strsplit(i,"\\.bam")[[1]]
   comm0 = paste0("samtools idxstats ",i," | awk {'print $3'}")
   mapLen = sum(as.integer(system(comm0, intern=T)))
-  rat = subsampleN/mapLen
-  if(mapLen <= subsampleN) {
+  rat = downsampleN/mapLen
+  if(mapLen <= downsampleN) {
     rat2 = 0.999999
-  } else if(mapLen > subsampleN) {
+  } else if(mapLen > downsampleN) {
     rat2 = strsplit(as.character(rat),"\\.")[[1]][2]
   }
   comm1 = paste0("samtools view -s ",round(runif(1,1,10000),0),".",rat2," -b ",i," > ",sid,"_downsampled.bam")   # Edit this line if you want your downsampled BAMs with a different suffix other than "_downsampled.bam"
