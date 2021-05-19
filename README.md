@@ -101,10 +101,32 @@ counts0 - Number of non-shared alleles<br/>
 counts4 - Number of shared alleles<br/>
 Relationship - Descriptive relationship based on HRC value
 
-TKGWV2 is only able to detect 1st and 2nd degree relationships. 
-
+TKGWV2 is only able to detect 1st and 2nd degree relationships due to their typical distribution ranges. The 3rd degree class, for example, by definition would have a mean HRC value of 0.0625, which would be located at the exact transition point between Unrelated and 2nd degree. With a theoretical distribution 0f 0.0625+-0.0625, the overlap with the 2 neighbouring classes would be substantial, and therefore would lead to uncertain classifications.<br/><br/>
 
 ![alt text](https://user-images.githubusercontent.com/22391172/118780776-ae0dbc00-b88c-11eb-9a7a-9552b909aa26.png?raw=true)
+
+For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is slightly above or below 0.0625, respectively.
+
+However, as part of a provided helper script to produce simulated ranges like the ones above ('distSimulations.R'), you have the option to include 3rd degree curves and calculate the probability of an ancient pair's HRC belonging to that class and the overlapping ones. *Do be aware that this must only be used as suggestive evidence for investigation purposes, and never as definite proof of 3rd degree relationships.*
+
+# Helper scripts
+We provide 4 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
+- 'downsampleBAM.R' can be used to downsample BAM files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
+- 'individualisePlink.R' can be used to extract and convert all samples from a binary PLINK dataset into individual text-PLINK sets (ped/map). This is useful, for example, if you want to use TKGWV2 on 1240K data. After running this function you can run TKGWV2 directly from 'plink2tkrelated'.
+- 'distSimulations.R' can be used to generate simulated distribution curves and posterior probabilities for estimated HRC values based on an input plink frequencies file (frq).
+- 'simsForRanges.R' can be used to generate simulated distribution curves over a set of increasing SNP numbers in order to assess error rates and SNP thresholds for an input plink frequencies file (frq).
+
+
+
+
+
+# Generation of own support files
+- PLINK frequency file was generated from 1000 Genomes Phase 3 CEU population. The only QC step required is to exclude fixed SNPs, reducing from 77 to 22 million variants
+(maybe have default EUR files, where both the BED file and FRQ file have no fixed SNPs, will make things much faster)
+- ................................................
+
+
+
 
 
 
@@ -116,6 +138,7 @@ In the TKGWV2 publication, we showed that from 15000 used SNPs the error rates w
 Although at 10000 SNPs the estimated error rates when using the provided support files are at around 3%, we provide a helper script to run simulations on the specific set of SNPs used to estimate that pair's relatedness. This information is contained in the files named as 'commInd1_Ind2.frq'.<br/><br/>
 The simulations will generate distribution ranges for the 3 relatedness classes, and use them them to calculate the probability of the pair's estimate to represent each class.<br/><br/>
 The R script for this, 'distSimulations.R', can be found in the folder 'helpers'.<br/><br/>
+# EDIT THIIIIIIS WITH NEW 1240K RESULTS
 The 10-15000 SNPs thresold was identified for the genome wide data set based on shotgun data, which likely includes less-informative variants than, for example, the curated 1240K SNP set. Consequently, for the latter, the minimum number of SNPs that would correspond to similar error rates should be substantially lower. On an updated version of TKGWV2 we will include information on error rates and thresholds for the 1240K dataset.
 
 - *Always run confirmation analysis for previously untested datasets and frequencies*<br/>
@@ -128,10 +151,6 @@ However, with the ongoing exponential increase in availability of both modern an
    
    
    
-# Generation of own support files
-- PLINK frequency file was generated from 1000 Genomes Phase 3 CEU population. The only QC step required is to exclude fixed SNPs, reducing from 77 to 22 million variants
-(maybe have default EUR files, where both the BED file and FRQ file have no fixed SNPs, will make things much faster)
-- ................................................
 
 
 
