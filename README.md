@@ -32,7 +32,7 @@ The TKGWV2 pipeline is divided in two main parts:
 
 This allows TKGWV2 to take as input either individual BAM or text-PLINK files.
 
-![alt text](https://github.com/danimfernandes/tkgwv2/blob/master/diags/tkgwv2_pipeline.png?raw=true)
+![alt text](https://user-images.githubusercontent.com/22391172/118780982-e31a0e80-b88c-11eb-906a-655c04742859.png?raw=true)
 
 Depending on what input data you use, TKGWV2 will require different support files (circled in diagram above).
 ### If starting from BAM files (orange point in diagram):
@@ -102,6 +102,10 @@ counts4 - Number of shared alleles<br/>
 Relationship - Descriptive relationship based on HRC value
 
 TKGWV2 is only able to detect 1st and 2nd degree relationships. 
+
+
+![alt text](https://user-images.githubusercontent.com/22391172/118780776-ae0dbc00-b88c-11eb-9a7a-9552b909aa26.png?raw=true)
+
 
 
 # Tips and suggestions
