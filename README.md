@@ -35,25 +35,25 @@ This allows TKGWV2 to take as input either individual BAM or text-PLINK files.
 ![alt text](https://github.com/danimfernandes/tkgwv2/blob/master/tkgwv2_pipeline.png?raw=true)
 
 Depending on what input data you use, TKGWV2 will require different support files (circled in diagram above).
-### If starting from BAM files (orange point in diagram above):
-1. The index genome (fasta) to which the files were aligned to;
+### If starting from BAM files (orange point in diagram):
+1. The reference genome (fasta) to which the files were aligned to;
 2. A list of biallelic and non-fixed SNPs (bed) in 'bed' format, to generate Pileup information;
 3. A binary PLINK dataset (bed/bim/fam) covering the exact same positions as the 'bed' file, to generate the text-PLINK 'map' files.
 
 With these files, TKGWV2 will generate a set of text-PLINK files (ped/map) per individual. If you already have your data in PLINK format (e.g. from a 1240K dataset), you can convert it to individual text-PLINK sets and avoid running 'bam2plink.R'.
 
-### If starting from individual text-PLINKs (ped/map):
+### If starting from individual text-PLINKs (ped/map) (green point in diagram):
 1. A PLINK frequencies file (frq) containing the same SNPs (or a subset) of the ones in the ped/map files, obtained from a relevant large dataset.
 
 We provide a sample set of these support files that can be downloaded from here:
 https://drive.google.com/drive/folders/1Aw-0v_7CUorHJOLpCJ0QVCwEdH43HlO4?usp=sharing
 
-Crucially, the allele frequencies provided must be representative of the populations the ancient individuals being tested belong to. Although the files we provide were generated using modern European CEU data from the 1000 Genomes Project Phase 3, we showed in the original publication of TKGWV2 that they work well for ancient populations from Europe spanning from the Neolithic to Medieval times. Due to this extensive geographical and temporal working window, you can, for example, use TKGWV2 on a pair of individuals from a Neolithic site in Poland at the same time that you use it for a Bronze Age pair from Spain.
+Crucially, the allele frequencies provided must be representative of the populations the ancient individuals being tested belong to. Although the files we provide were generated using modern European CEU data from the 1000 Genomes Project Phase 3, we showed in the TKGWV2 publication that they work well for ancient populations from Europe spanning from the Neolithic to Medieval times. Due to this extensive geographical and temporal working window, you can, for example, use TKGWV2 on a pair of individuals from a Neolithic site in Poland at the same time that you use it for a Bronze Age pair from Spain.
 
 For other untested regions and chronologies, or if you wish to use a different set of SNPs, it is very important to run a confirmation analysis on pairs of individuals with previously known relationships, to make sure that the used allele frequencies are not introducing any biases. Further below we provide a walkthrough for generating your own support files, in 'Generating own support files'.
 
 # Usage, arguments, and examples
-TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' and 'plink2tkrelated' can be easily used and combined through a Python wrapper script - TKGWV2.py.
+TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' and 'plink2tkrelated' - can be easily used and combined through the Python wrapper script TKGWV2.py.
 
     $ ./TKGWV2.py 
         
@@ -101,7 +101,7 @@ counts0 - Number of non-shared alleles<br/>
 counts4 - Number of shared alleles<br/>
 Relationship - Descriptive relationship based on HRC value
 
-TKGWV2 is only able to identify 1st and 2nd degree relationships.................
+TKGWV2 is only able to detect 1st and 2nd degree relationships. 
 
 
 # Tips and suggestions
