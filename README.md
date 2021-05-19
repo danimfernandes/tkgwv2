@@ -32,7 +32,7 @@ The TKGWV2 pipeline is divided in two main parts:
 
 This allows TKGWV2 to take as input either individual BAM or text-PLINK files.
 
-![alt text](https://github.com/danimfernandes/tkgwv2/blob/master/tkgwv2_pipeline.png?raw=true)
+![alt text](https://github.com/danimfernandes/tkgwv2/blob/master/diags/tkgwv2_pipeline.png?raw=true)
 
 Depending on what input data you use, TKGWV2 will require different support files (circled in diagram above).
 ### If starting from BAM files (orange point in diagram):
