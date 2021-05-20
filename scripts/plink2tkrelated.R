@@ -1,3 +1,4 @@
+### Estimating relatedness from individual text-PLINKs
 ### Author - Daniel Fernandes
 # Programs with system-wide installation required # 
 # 1. plink
