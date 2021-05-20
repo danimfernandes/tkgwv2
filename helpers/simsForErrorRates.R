@@ -1,4 +1,6 @@
 ### Calculate error rates for specific subsets of SNPs by generating simulated individuals based on provided allele frequencies
+### Author - Daniel Fernandes
+
 # Please provide data for the following 3 variables
 thins = c(100,500,1000,2000,3000,4000)    # SNP subset sizes
 simSeqs = c(100,250,500,1000,2000,4000)   # Number of simulated relationships
