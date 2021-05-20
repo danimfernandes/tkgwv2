@@ -1,4 +1,5 @@
 ### Converting BAMs to individual text-PLINKs
+### Author - Daniel Fernandes
 # Programs with system-wide installation required # 
 # 1. samtools
 # 2. plink
