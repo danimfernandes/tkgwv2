@@ -105,17 +105,14 @@ TKGWV2 is only able to detect 1st and 2nd degree relationships due to their typi
 
 ![alt text](https://user-images.githubusercontent.com/22391172/118780776-ae0dbc00-b88c-11eb-9a7a-9552b909aa26.png?raw=true)
 
-For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is slightly above or below 0.0625, respectively.
-
-However, as part of a provided helper script to produce simulated ranges like the ones above ('distSimulations.R'), you have the option to include 3rd degree curves and calculate the probability of an ancient pair's HRC belonging to that class and the overlapping ones. *Do be aware that this must only be used as suggestive evidence for investigation purposes, and never as definite proof of 3rd degree relationships.*
+For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is above or below 0.0625, respectively.
 
 # Helper scripts
 We provide 4 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
 - 'downsampleBAM.R' can be used to downsample BAM files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
 - 'individualisePlink.R' can be used to extract and convert all samples from a binary PLINK dataset into individual text-PLINK sets (ped/map). This is useful, for example, if you want to use TKGWV2 on 1240K data. After running this function you can run TKGWV2 directly from 'plink2tkrelated'.
 - 'distSimulations.R' can be used to generate simulated distribution curves and posterior probabilities for estimated HRC values based on an input plink frequencies file (frq).
-- 'simsForRanges.R' can be used to generate simulated distribution curves over a set of increasing SNP numbers in order to assess error rates and SNP thresholds for an input plink frequencies file (frq).
-
+- 'simsForErrorRates.R' can be used to generate simulated distribution curves over a set of increasing SNP numbers in order to assess error rates and SNP thresholds for an input plink frequencies file (frq). The output is an error rates vs SNPs plot and a text file with the data used to generate it. A gray vertical line is drawn at the lowest number of SNPs tested with an average error <=1%. The text file is a concatenation of the tables of values for 1st degree, 2nd degree, and Unrelated, with the SNP number as the first column, and the general header as the number of simulations. 
 
 
 
@@ -132,16 +129,15 @@ We provide 4 R functions to help automate some situations you might come across 
 
 # Tips and suggestions
 - *Downsample your data*<br/>
-In the TKGWV2 publication, we showed that from 15000 used SNPs the error rates were under 0.50%, therefore one of our main suggestions is to downsample your data for a more time-efficient analyses. When starting from BAM files, we showed that downsampling them to a maximum of 1.3-1.6 million reads was sufficient to obtain an average of 23000 used SNPs per pair, and consequently run TKGWV2 with very low error rates at a much higher speed than if larger BAM files were to be used.
+In the TKGWV2 publication we showed that, with the genome-wide SNP set, from 15000 used SNPs the error rates were under 0.50%, therefore one of our main suggestions is to downsample your data for a more time-efficient analyses. When starting from BAM files, we showed that downsampling them to a maximum of 1.3-1.6 million reads per file was sufficient to obtain an average of 23000 used SNPs per pair, and consequently run TKGWV2 with very low error rates at a much higher speed than if larger BAM files were to be used.
 
 - *Use simulations to get posterior probabilities for <15000 or <10000 SNPs*<br/>
-Although at 10000 SNPs the estimated error rates when using the provided support files are at around 3%, we provide a helper script to run simulations on the specific set of SNPs used to estimate that pair's relatedness. This information is contained in the files named as 'commInd1_Ind2.frq'.<br/><br/>
+The estimated error rates when using the provided support files with genome-wide SNP set are at 3% for 10000 SNPs and 0.5% at 15000 SNPs, so we provide a helper script in order to see if these potentially less accurate estimates overlap with more than one relatedness class. This helper script runs simulations on the specific set of SNPs used to estimate that pair's relatedness. This information is contained in the files named as 'commInd1_Ind2.frq'.<br/><br/>
 The simulations will generate distribution ranges for the 3 relatedness classes, and use them them to calculate the probability of the pair's estimate to represent each class.<br/><br/>
 The R script for this, 'distSimulations.R', can be found in the folder 'helpers'.<br/><br/>
-# EDIT THIIIIIIS WITH NEW 1240K RESULTS
-The 10-15000 SNPs thresold was identified for the genome wide data set based on shotgun data, which likely includes less-informative variants than, for example, the curated 1240K SNP set. Consequently, for the latter, the minimum number of SNPs that would correspond to similar error rates should be substantially lower. On an updated version of TKGWV2 we will include information on error rates and thresholds for the 1240K dataset.
+*Note:* The 10-15000 SNPs thresold was identified for the provided genome-wide SNP set based on shotgun data, which likely includes less-informative variants than, for example, the curated 1240K SNP set. Consequently, for the latter, the minimum number of SNPs that would correspond to similar error rates of <1% are substantially lower at around 3000 SNPs instead of between 10-15000.
 
-- *Always run confirmation analysis for previously untested datasets and frequencies*<br/>
+- *Always run confirmation analysis and calculate error rates for previously untested datasets and frequencies*<br/>
 As mentioned above, it is important that the allele frequencies provided properly reflect the genetic composition of the ancient population the individuals being tested belonged to. Whether you use closely related modern populations or a large set of ancient individuals to obtain allele frequencies from, make sure to confirm that those frequencies are appropriate by testing the pipeline on previously published individuals from the same (or minimally closely related) population with known relationships.<br/><br/>
 This is an important caveat that needs to be considered, and might prove challenging for regions or periods for which there is a lack of published ancient relatives. <br/><br/>
 However, with the ongoing exponential increase in availability of both modern and aDNA data around the world, TKGWV2 can potentially be applied to the great majority of situations.<br/>
