@@ -392,7 +392,7 @@ for(i in thins) {
   dfU[counter,"SNPs/Sims"] = i
  
   for(sim in simSeqs) {
-    print(paste0("Sims: ",sim))
+    print(paste0("Simulated relationships: ",sim))
     errorRates = simsPair(freqFile = freqsNew, numSimPairs = sim, suffix = paste0(i,"SNP_",sim))
     
     df1[counter,paste(sim)] = errorRates[[2]][1]
