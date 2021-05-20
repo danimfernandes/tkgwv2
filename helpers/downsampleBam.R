@@ -1,4 +1,6 @@
 ### Downsize BAM files for faster analysis
+### Author - Daniel Fernandes
+
 downsampleBAM = function(downsampleN = 1500000, extensionBam = "\\.bam$", extensionDownBam = "_subsampled.bam") {
   # Description of arguments #
   # downsampleN = Default 1500000. Maximum number of reads to downsample BAM files to
