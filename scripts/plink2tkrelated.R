@@ -1,3 +1,4 @@
+### Author - Daniel Fernandes
 # Programs with system-wide installation required # 
 # 1. plink
 # R package required # 
