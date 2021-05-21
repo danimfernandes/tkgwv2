@@ -64,9 +64,9 @@ if len(plink2tkrelatedArgs) > 0 and "plink2tkrelated" not in sys.argv:
 	print("\n Warning: Arguments for unused 'plink2tkrelated' found. Will be ignored.")
 
 if "bam2plink" in sys.argv:
-	os.system("Rscript " + pywd + "/scripts/bam2plink_v0.3_pathToReady.R " + " ".join(bam2plinkArgs) + " " + pywd)
+	os.system("Rscript " + pywd + "/scripts/bam2plink.R " + " ".join(bam2plinkArgs) + " " + pywd)
 
 if "plink2tkrelated" in sys.argv and "bam2plink" in sys.argv:
-	os.system("Rscript " + pywd + "/scripts/plink2tkrelated_v0.3_pathToReady.R " + " ".join(plink2tkrelatedArgs) + " bam2plink" + " " + pywd)
+	os.system("Rscript " + pywd + "/scripts/plink2tkrelated.R " + " ".join(plink2tkrelatedArgs) + " bam2plink" + " " + pywd)
 elif "plink2tkrelated" in sys.argv:
-	os.system("Rscript " + pywd + "/scripts/plink2tkrelated_v0.3_pathToReady.R " + " ".join(plink2tkrelatedArgs) + " " + pywd)
+	os.system("Rscript " + pywd + "/scripts/plink2tkrelated.R " + " ".join(plink2tkrelatedArgs) + " " + pywd)
