@@ -1,5 +1,7 @@
 ### Downsize BAM files for faster analysis
 ### Author - Daniel Fernandes
+### Instructions:
+### There are no mandatory arguments that need input information, but if you want to edit any, do so on line 29, and run the whole code afterwards.
 
 downsampleBAM = function(downsampleN = 1500000, extensionBam = "\\.bam$", suffixDownBam = "_subsampled") {
   # Description of arguments #
