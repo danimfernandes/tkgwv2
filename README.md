@@ -80,11 +80,37 @@ TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' a
 ### Example 1 - Starting from BAM files and running 'bam2plink' and then 'plink2tkrelated':
 
     $ ~/Software/tkgwv2-master/TKGWV2.py bam2plink --referenceGenome ~/Data/hg19/full_karyo.fa --gwvList ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/1000GP3_22M_noFixed_noChr.bed --bamExtension final.bam --gwvPlink ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1000GP3_EUR_22M_noFixed.frq
-    
+
+### Example 1.1 - Starting from BAM files, downsampling, and running 'bam2plink' and then 'plink2tkrelated':
+
+Use the 'downsampleBam.R' helper script:
+
+    ### Downsize BAM files for faster analysis
+    downsampleBAM = function(downsampleN = 1500000, extensionBam = "\\.bam$", suffixDownBam = "_subsampled") {}
+    downsampleBAM(downsampleN = 1500000, extensionBam = "\\.bam$", suffixDownBam = "_subsampled")
+ 
+ Now you can use the downsampled BAM files with suffix "\_subsampled":
+
+    $ ~/Software/tkgwv2-master/TKGWV2.py bam2plink --referenceGenome ~/Data/hg19/full_karyo.fa --gwvList ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/1000GP3_22M_noFixed_noChr.bed --bamExtension _subsampled.bam --gwvPlink ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1000GP3_EUR_22M_noFixed.frq
+
+<br/><br/>
+
 ### Example 2 - Starting from text-PLINKs (e.g. for 1240K data) and running 'plink2tkrelated':
 
     $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
-    
+
+### Example 2.1 - Starting from text-PLINKs (e.g. for 1240K data) and running 'plink2tkrelated':
+
+Use the 'downsamplePed.R' helper script:
+
+    ### Downsize text-PLINK (ped/map) for faster analysis
+    downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled") {}
+    downsamplePED(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled")
+
+Now either generate a text file listing the downsampled file pairs and use that as the argument for the 'dyads' option of 'plink2tkrelated', or move the original PED/MAP files to a different folder, as by default 'plink2tkrelated' will work on all PED/MAP file pairs in the working folder:
+
+    $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
+
 # Results and interpretation
 All relationships will be written to a 7-column file named 'TKGWV2_Results.txt':
 
