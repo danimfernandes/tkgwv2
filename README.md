@@ -109,7 +109,8 @@ For these reasons, TKGWV2 does not include 3rd degree relationship estimation, a
 
 # Helper scripts
 We provide 4 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
-- 'downsampleBAM.R' can be used to downsample BAM files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
+- 'downsampleBam.R' can be used to downsample BAM files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
+- 'downsamplePed.R' can be used to downsample text-PLINK files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
 - 'individualisePlink.R' can be used to extract and convert all samples from a binary PLINK dataset into individual text-PLINK sets (ped/map). This is useful, for example, if you want to use TKGWV2 on 1240K data. After running this function you can run TKGWV2 directly from 'plink2tkrelated'.
 - 'distSimulations.R' can be used to generate simulated distribution curves and posterior probabilities for estimated HRC values based on an input plink frequencies file (frq).
 - 'simsForErrorRates.R' can be used to generate simulated distribution curves over a set of increasing SNP numbers in order to assess error rates and SNP thresholds for an input plink frequencies file (frq). The output is an error rates vs SNPs plot and a text file with the data used to generate it. A gray vertical line is drawn at the lowest number of SNPs tested with an average error <=1%. The text file is a concatenation of the tables of values for 1st degree, 2nd degree, and Unrelated, with the SNP number as the first column, and the general header as the number of simulations. 
@@ -130,7 +131,8 @@ We provide 4 R functions to help automate some situations you might come across 
 # Tips and suggestions
 - *Downsample your data*<br/>
 In the TKGWV2 publication we showed that, with the genome-wide SNP set, from 15000 used SNPs the error rates were under 0.50%, therefore one of our main suggestions is to downsample your data for a more time-efficient analyses. When starting from BAM files, we showed that downsampling them to a maximum of 1.3-1.6 million reads per file was sufficient to obtain an average of 23000 used SNPs per pair, and consequently run TKGWV2 with very low error rates at a much higher speed than if larger BAM files were to be used.<br/><br/>
-Similarly, for 1240K data, 60-100K SNPs per individual produced pairwise estimates with average used SNPs between 2400-6700, and error rates between ~3 and <0.5%, respectively. Doing this on individuals with ~800K SNPs reduced the running time of 'plink2tkrelated' by 36 times, from 330 to 9 seconds, for 10 relationships.
+Similarly, for 1240K data, 60-100K SNPs per individual produced pairwise estimates with average used SNPs between 2400-6700, and error rates between ~3 and <0.5%, respectively. Doing this on individuals with ~800K SNPs reduced the running time of 'plink2tkrelated' by 36 times, from 330 to 9 seconds, for 10 relationships.<br/><br/>
+We provide 2 helper scripts to downsample BAM files and text-PLINK sets, so you can downsample whole-genome ('downsampleBam.R') and 1240K data ('downsamplePed.R'). Their default subsampling numbers are 1.5 million reads for BAM files, and 80K SNPs for 1240K text-PLINKs.
 
 - *Use simulations to get posterior probabilities for <15000 or <10000 SNPs*<br/>
 The estimated error rates when using the provided support files with genome-wide SNP set are at 3% for 10000 SNPs and 0.5% at 15000 SNPs, so we provide a helper script in order to see if these potentially less accurate estimates overlap with more than one relatedness class. This helper script runs simulations on the specific set of SNPs used to estimate that pair's relatedness. This information is contained in the files named as 'commInd1_Ind2.frq'.<br/><br/>
