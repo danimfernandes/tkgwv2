@@ -1,5 +1,7 @@
 ### Downsize text-PLINK (ped/map) for faster analysis
 ### Author - Daniel Fernandes
+### Instructions:
+### There are no mandatory arguments that need input information, but if you want to edit any, do so on line 26, and run the whole code afterwards.
 
 downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled") {
   # Description of arguments #
@@ -11,7 +13,6 @@ downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDo
     sid = strsplit(i,paste0(extensionPed,"$"))[[1]]
     comm0 = paste0("wc -l ",sid,".map")
     mapLen = as.integer(strsplit(system(comm0, intern=T), " ")[[1]][1])
-    #rat = downsampleN/mapLen
     if(mapLen <= downsampleN) {
       rat2 = mapLen
     } else if(mapLen > downsampleN) {
