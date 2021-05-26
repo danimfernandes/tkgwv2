@@ -29,7 +29,7 @@ if(length(grep("bam2plink",args)) != 0) {
 } else { 
   cat("\n ################################################################################")
   cat("\n ### TKGWV2 - An ancient DNA relatedness pipeline for ultra-low coverage data ###")
-  cat("\n ## Version 1.0 - Released 05/2021")
+  cat("\n ## Version 1.0a - Released 06/2021")
   cat("\n #")
 }
 
