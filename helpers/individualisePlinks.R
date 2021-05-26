@@ -1,5 +1,7 @@
 ### Extract and convert all samples from binary PLINK dataset into individual text-PLINK
 ### Author - Daniel Fernandes
+### Instructions:
+### On line 22, you need to provide input for the compulsory argument 'dataset' when calling the function. Run the whole code afterwards.
 
 individualisePlinks = function(dataset) {
   # Description of arguments #
