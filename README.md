@@ -1,6 +1,6 @@
 # TKGWV2
 # An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data
-
+# version 1.0a - Released 06/2021
 # Description
 TKGWV2 is a pipeline to estimate biological relatedness (1st, 2nd, and unrelated degrees) between individuals specifically aimed at ultra-low coverage ancient DNA data obtained from whole genome sequencing.
 It is a massive update to the original TKrelated method published in 2017 (Fernandes et al.), with ease of use and efficiency as major concerns.
