@@ -36,7 +36,34 @@ bam2plinkArgs = []
 plink2tkrelatedArgs = []
 for opt, value in options:
 	if opt in ['-h', '--help']:
-		print("This is gonna be the help")
+		print("""TKGWV2.py 
+Version 1.0a - Released 06/2021
+
+Utilities and options:
+  bam2plink  
+    [mandatory arguments]
+    - r, --referenceGenome            <path> Path to index fasta file used to generate BAM files
+    - L, --gwvList                    <path> List of positions to generate pileup file from in BED format
+    - p, --gwvPlink                   <path> Path to PLINK dataset with same positions as --gwvList, to generate MAP files. A dummy dataset with a single individual is provided
+    
+    [optional arguments]
+    - e, --bamExtension               <str> Default ".bam". Specific extension/suffix of the BAM files to be used. Anything before this will be considered as the sample ID
+    - m, --minMQ                      <int> Default 30. Minimum mapping quality
+    - b, --minBQ                      <int> Default 30. Minimum base quality
+    - t, --excludeTerminalReadBases   Exclude terminal read positions from pileup file, otherwise include by default
+    - h, --help                       Displays this help
+
+  plink2tkrelated
+    [mandatory arguments]
+    - f, --freqFile                   <path> Allele frequencies file in PLINK format (FRQ) containing the same SNPs (or a subset) of the ones in the input PED/MAP files
+
+    [optional arguments]
+    - d, --dyads                      <path> Tab-spaced text file with each specified pair to be analysed per line, otherwise will run on every possible pair. Useful when analysing temporal or geographically distant pairs (as long as both are within the variation captured by the --freqFile)
+    - i, --ignoreThresh               <int> Default 1. Threshold for the minimum number of SNPs allowed to estimate relatedness
+
+Example run command:
+  $ ./TKGWV2.py bam2plink --referenceGenome full_karyo.fa --gwvList 1000GP3_22M_noFixed_noChr.bed --bamExtension final.bam --gwvPlink DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile 1000GP3_EUR_22M_noFixed.frq""")
+		
 	elif opt in ['-r', '--referenceGenome']:
 		bam2plinkArgs.append("=".join(['--referenceGenome',value]))
 	elif opt in ['-L', '--gwvList']:
