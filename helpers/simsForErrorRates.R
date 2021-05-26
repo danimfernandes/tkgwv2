@@ -1,12 +1,11 @@
 ### Calculate error rates for specific subsets of SNPs by generating simulated individuals based on provided allele frequencies
 ### Author - Daniel Fernandes
-
-# Please provide data for the following 3 variables
+### Instructions:
+### Please provide input for the following 3 variables, and then run the whole code.
 thins = c(100,500,1000,2000,3000,4000)    # SNP subset sizes
 simSeqs = c(100,250,500,1000,2000,4000)   # Number of simulated relationships
 freqsFi = "1000GP3_1240K.frq"   # Frequencies file in plink format with header (frq)
 
-# Run the remaining code
 simsPair = function(freqFile, numSimPairs=2500, unrelated=TRUE, fullsibs=TRUE, halfsibs=TRUE, freqFileHeader = FALSE, suffix = FALSE) {
   unrelated_vec = c()
   fullSib_vec = c()
