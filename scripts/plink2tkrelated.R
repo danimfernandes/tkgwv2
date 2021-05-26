@@ -114,8 +114,9 @@ if(length(error1)>0) {
         comm10d = paste0("plink --tfile ",samp1,"____",samp2," --extract comm",samp1,"_",samp2,"_SNPs3 --recode transpose --out ",samp1,"____",samp2," --allow-no-sex")
         system(comm10d, ignore.stdout = TRUE, ignore.stderr = TRUE)
       }
-      unlink(c(list.files(getwd(),".bed$"), list.files(getwd(),".bim$"), list.files(getwd(),".fam$"), list.files(getwd(),".log$"), list.files(getwd(),".nosex$"), list.files(getwd(),paste0(samp1,"_",samp2,"_SNPs$"))))
-      unlink(paste0("comm",samp1,"_",samp2,"_SNPs2"))
+      unlink(c(list.files(getwd(),paste0(samp1,"short\\.(bed|bim|fam|log|nosex)")),list.files(getwd(),paste0(samp2,"short\\.(bed|bim|fam|log|nosex)"))))
+      unlink(list.files(getwd(),paste0(samp1,"____",samp2,"\\.(bed|bim|fam|log|nosex|tfam)")))
+      unlink(list.files(getwd(),paste0("comm",samp1,"_",samp2,"_(SNPs|SNPs2|SNPs3)")))
  
       ## Read pairwise .TPED
       pairLoadNew = read.table(paste0(samp1,"____",samp2,".tped"),header=FALSE,stringsAsFactors = FALSE, sep=" ")
