@@ -101,8 +101,13 @@ Use the 'downsampleBam.R' helper script:
 
     $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
 
-### Example 2.1 - Starting from text-PLINKs, downsampling, and running 'plink2tkrelated':
-
+### Example 2.1 - Starting from 1240K dataset, individualising text-PLINKs, downsampling, and running 'plink2tkrelated':
+Use the 'individualisePlinks.R' helper script:
+    
+    ### Extract and convert all samples from binary PLINK dataset into individual text-PLINK
+    individualisePlinks = function(dataset) {}
+    individualisePlinks(dataset = "v443_1240K_forKinship")
+    
 Use the 'downsamplePed.R' helper script:
 
     ### Downsize text-PLINK (ped/map) for faster analysis
