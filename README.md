@@ -77,6 +77,8 @@ TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' a
         - d, --dyads                      <path> Tab-spaced text file with each specified pair to be analysed per line, otherwise will run on every possible pair. Useful when analysing temporal or geographically distant pairs (as long as both are within the variation captured by the --freqFile)
         - i, --ignoreThresh               <int> Default 1. Threshold for the minimum number of SNPs allowed to estimate relatedness
 
+<br/>
+
 ### Example 1 - Starting from BAM files and running 'bam2plink' and then 'plink2tkrelated':
 
     $ ~/Software/tkgwv2-master/TKGWV2.py bam2plink --referenceGenome ~/Data/hg19/full_karyo.fa --gwvList ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/1000GP3_22M_noFixed_noChr.bed --bamExtension final.bam --gwvPlink ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1000GP3_EUR_22M_noFixed.frq
@@ -93,13 +95,13 @@ Use the 'downsampleBam.R' helper script:
 
     $ ~/Software/tkgwv2-master/TKGWV2.py bam2plink --referenceGenome ~/Data/hg19/full_karyo.fa --gwvList ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/1000GP3_22M_noFixed_noChr.bed --bamExtension _subsampled.bam --gwvPlink ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1000GP3_EUR_22M_noFixed.frq
 
-<br/><br/>
+<br/>
 
 ### Example 2 - Starting from text-PLINKs (e.g. for 1240K data) and running 'plink2tkrelated':
 
     $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
 
-### Example 2.1 - Starting from text-PLINKs (e.g. for 1240K data) and running 'plink2tkrelated':
+### Example 2.1 - Starting from text-PLINKs, downsampling, and running 'plink2tkrelated':
 
 Use the 'downsamplePed.R' helper script:
 
