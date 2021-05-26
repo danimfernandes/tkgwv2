@@ -1,5 +1,7 @@
 ### Calculate distribution ranges for the provided allele frequencies and calculate posterior probabilities for each class
 ### Author - Daniel Fernandes (with posterior probability code by John Finarelli from 'tkrelated' package of Fernandes et al. 2017 - doi:10.1038/srep41529)
+### Instructions:
+### On line 494, you need to provide input for at least the compulsory argument 'sampleVec' when calling the function. Run the whole code afterwards.
 
 distSimulations = function(sampleVec, numSimPairs=2000, freqFileHeader = FALSE) {
   # Description of arguments #
