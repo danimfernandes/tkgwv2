@@ -10,7 +10,7 @@ individualisePlinks = function(dataset) {
   for(i in dataLoad$V2) {
     to_write=paste(dataLoad[it,1],i)
     write.table(to_write,"to_keep",quote=FALSE,col.names = FALSE,row.names = FALSE)
-    cmd1=paste0("plink --bfile ",dataset," --keep to_keep --keep-allele-order --recode --out ",i)
+    cmd1=paste0("plink --bfile ",dataset," --keep to_keep --geno 0.01 --keep-allele-order --recode --out ",i)
     system(cmd1)
     it=it+1
   }
