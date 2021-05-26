@@ -1,6 +1,5 @@
 # TKGWV2
 # An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data
-# version 1.0a - Released 06/2021
 # Description
 TKGWV2 is a pipeline to estimate biological relatedness (1st, 2nd, and unrelated degrees) between individuals specifically aimed at ultra-low coverage ancient DNA data obtained from whole genome sequencing.
 It is a massive update to the original TKrelated method published in 2017 (Fernandes et al.), with ease of use and efficiency as major concerns.
@@ -11,6 +10,7 @@ These characteristics have the potential to offer relatedness estimation during 
 Although mainly designed for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided.
 
 # Requirements
+### Version 1.0a - Released 06/2021
 TKGWV2 was developed for Linux. The following software needs to be available as system-wide installations:
 - Python 3
 - PLINK 1.9
@@ -35,16 +35,17 @@ This allows TKGWV2 to take as input either individual BAM or text-PLINK files.
 ![alt text](https://user-images.githubusercontent.com/22391172/118780982-e31a0e80-b88c-11eb-906a-655c04742859.png?raw=true)
 
 Depending on what input data you use, TKGWV2 will require different support files (circled in diagram above).
+***
 ### If starting from BAM files (orange point in diagram):
 1. The reference genome (fasta) to which the files were aligned to;
 2. A list of biallelic and non-fixed SNPs (bed) in 'bed' format, to generate Pileup information;
 3. A binary PLINK dataset (bed/bim/fam) covering the exact same positions as the 'bed' file, to generate the text-PLINK 'map' files.
 
 With these files, TKGWV2 will generate a set of text-PLINK files (ped/map) per individual. If you already have your data in PLINK format (e.g. from a 1240K dataset), you can convert it to individual text-PLINK sets and avoid running 'bam2plink.R'.
-
+***
 ### If starting from individual text-PLINKs (ped/map) (green point in diagram):
 1. A PLINK frequencies file (frq) containing the same SNPs (or a subset) of the ones in the ped/map files, obtained from a relevant large dataset.
-
+***
 We provide a sample set of these support files that can be downloaded from here:
 https://drive.google.com/drive/folders/1Aw-0v_7CUorHJOLpCJ0QVCwEdH43HlO4?usp=sharing
 
@@ -79,6 +80,7 @@ TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' a
 
 <br/>
 
+***
 ### Example 1 - Starting from BAM files and running 'bam2plink' and then 'plink2tkrelated':
 
     $ ~/Software/tkgwv2-master/TKGWV2.py bam2plink --referenceGenome ~/Data/hg19/full_karyo.fa --gwvList ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/1000GP3_22M_noFixed_noChr.bed --bamExtension final.bam --gwvPlink ~/Software/tkgwv2-master/support/genomeWideVariants_hg19/DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1000GP3_EUR_22M_noFixed.frq
@@ -97,6 +99,7 @@ Use the 'downsampleBam.R' helper script:
 
 <br/>
 
+***
 ### Example 2 - Starting from text-PLINKs (e.g. for 1240K data) and running 'plink2tkrelated':
 
     $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
@@ -114,7 +117,7 @@ Use the 'downsamplePed.R' helper script:
     downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled") {}
     downsamplePED(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled")
 
-Now either generate a text file listing the downsampled file pairs and use that as the argument for the 'dyads' option of 'plink2tkrelated', or move the original PED/MAP files to a different folder, as by default 'plink2tkrelated' will work on all PED/MAP file pairs in the working folder:
+Now either generate a text file listing the downsampled file pairs and use that as the argument for the 'dyads' option of 'plink2tkrelated', or move/delete the original PED/MAP files, as by default 'plink2tkrelated' will work on all PED/MAP file pairs in the working folder:
 
     $ ~/Software/tkgwv2-master/TKGWV2.py plink2tkrelated --freqFile ~/Software/tkgwv2-master/support/1240K/1000GP3_EUR_1240K.frq
 
