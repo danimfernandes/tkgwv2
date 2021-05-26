@@ -93,11 +93,11 @@ if(length(error1)>0) {
       system(comm4)
       #Use PLINK to reduce samples to common SNPs and merge
       comm5 = paste0("plink --file ",samp1," --extract comm",samp1,"_",samp2,"_SNPs --make-bed --out ",samp1,"short --allow-no-sex")
-      system(comm5, ignore.stdout = TRUE)
+      system(comm5, ignore.stdout = TRUE, ignore.stderr = TRUE)
       comm6 = paste0("plink --file ",samp2," --extract comm",samp1,"_",samp2,"_SNPs --make-bed --out ",samp2,"short --allow-no-sex")
-      system(comm6, ignore.stdout = TRUE)
+      system(comm6, ignore.stdout = TRUE, ignore.stderr = TRUE)
       comm7 = paste0("plink --bfile ",samp1,"short --bmerge ",samp2,"short --geno 0.1 --recode transpose --out ",samp1,"____",samp2," --allow-no-sex")
-      system(comm7, ignore.stdout = TRUE)
+      system(comm7, ignore.stdout = TRUE, ignore.stderr = TRUE)
       
       #Generate shorter FRQ file
       comm8 = paste0("awk '{print $2",'" "',"}' ",samp1,"____",samp2,".tped > comm",samp1,"_",samp2,"_SNPs2")
@@ -112,7 +112,7 @@ if(length(error1)>0) {
         comm10c = paste0("awk '{print $2",'" "',"}' comm",samp1,"____",samp2,".frq > comm",samp1,"_",samp2,"_SNPs3")
         system(comm10c)
         comm10d = paste0("plink --tfile ",samp1,"____",samp2," --extract comm",samp1,"_",samp2,"_SNPs3 --recode transpose --out ",samp1,"____",samp2," --allow-no-sex")
-        system(comm10d, ignore.stdout = TRUE)
+        system(comm10d, ignore.stdout = TRUE, ignore.stderr = TRUE)
       }
       unlink(c(list.files(getwd(),".bed$"), list.files(getwd(),".bim$"), list.files(getwd(),".fam$"), list.files(getwd(),".log$"), list.files(getwd(),".nosex$"), list.files(getwd(),paste0(samp1,"_",samp2,"_SNPs$"))))
       unlink(paste0("comm",samp1,"_",samp2,"_SNPs2"))
