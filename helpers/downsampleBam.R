@@ -1,11 +1,11 @@
 ### Downsize BAM files for faster analysis
 ### Author - Daniel Fernandes
 
-downsampleBAM = function(downsampleN = 1500000, extensionBam = "\\.bam$", extensionDownBam = "_subsampled.bam") {
+downsampleBAM = function(downsampleN = 1500000, extensionBam = "\\.bam$", suffixDownBam = "_subsampled") {
   # Description of arguments #
   # downsampleN = Default 1500000. Maximum number of reads to downsample BAM files to
-  # extensionBam = Default "\\.bam". Work on BAM files with this extension/suffix
-  # extensionDownBam = Default "_subsampled.bam". Extenstion/suffix for new downsampled BAM files
+  # extensionBam = Default "\\.bam$". Work on BAM files with this extension/suffix
+  # suffixDownBam = Default "_subsampled". Suffix for new downsampled BAM files
   #
   # Make sure your BAMs are indexed
   
@@ -19,9 +19,9 @@ downsampleBAM = function(downsampleN = 1500000, extensionBam = "\\.bam$", extens
     } else if(mapLen > downsampleN) {
       rat2 = strsplit(as.character(rat),"\\.")[[1]][2]
     }
-    comm1 = paste0("samtools view -s ",round(runif(1,1,10000),0),".",rat2," -b ",i," > ",sid,extensionDownBam)
+    comm1 = paste0("samtools view -s ",round(runif(1,1,10000),0),".",rat2," -b ",i," > ",sid,suffixDownBam,".bam")
     system(comm1)
   }
 }
 
-downsampleBAM(downsampleN = 1500000, extensionBam = "\\.bam$", extensionDownBam = "_subsampled.bam")
+downsampleBAM(downsampleN = 1500000, extensionBam = "\\.bam$", suffixDownBam = "_subsampled")
