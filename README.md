@@ -7,7 +7,7 @@ From the initial suggested minimum coverage threshold of 0.1X, TKGWV2 can be app
 
 These characteristics have the potential to offer relatedness estimation during screening sequencing steps at early stages of an ancient DNA project, and can therefore be very useful for project planning.
 
-Although mainly designed for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided.
+Although mainly designed and thoroughly tested for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided.
 
 # Requirements
 ### Version 1.0a - Released 06/2021
@@ -141,7 +141,7 @@ TKGWV2 is only able to detect 1st and 2nd degree relationships due to their typi
 
 ![alt text](https://user-images.githubusercontent.com/22391172/118780776-ae0dbc00-b88c-11eb-9a7a-9552b909aa26.png?raw=true)
 
-For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is above or below 0.0625, respectively.
+*Disclaimer:* For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is above or below 0.0625, respectively. Remember to consider these possibilities when interpreting your data, at least when you get 2nd degree relatives with an HRC close to 0.0625.
 
 # Helper scripts
 We provide 4 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
