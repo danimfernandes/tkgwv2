@@ -141,7 +141,7 @@ TKGWV2 is only able to detect 1st and 2nd degree relationships due to their typi
 
 ![alt text](https://user-images.githubusercontent.com/22391172/118780776-ae0dbc00-b88c-11eb-9a7a-9552b909aa26.png?raw=true)
 
-*Disclaimer:* For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is above or below 0.0625, respectively. Remember to consider these possibilities when interpreting your data, at least when you get 2nd degree relatives with an HRC close to 0.0625.
+***Disclaimer:*** For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is above or below 0.0625, respectively. In the TKGWV2 manuscript we showed that 3rd degree relatives tend to have an HRC between 0.0625 and ~0.090, so you might want to consider referring to any result within this interval as “2nd- or 3rd-degree” to cover this possibility. This interval was obtained based on only 11 3rd-degree relatives, therefore is only informative. Furthermore, it relies on the their correct assessment per the original publication.
 
 # Helper scripts
 We provide 4 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
