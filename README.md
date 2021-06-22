@@ -156,8 +156,7 @@ We provide 4 R functions to help automate some situations you might come across 
 
 # Generation of own support files
 - TODO
-- PLINK frequency file was generated from 1000 Genomes Phase 3 CEU population. The only QC step required was to exclude fixed SNPs, reducing from 77 to 22 million variants
-- ................................................
+
 
 
 
