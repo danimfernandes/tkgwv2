@@ -193,3 +193,8 @@ However, with the ongoing exponential increase in availability of both modern an
 Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data (2021). bioRxiv.
 
 Feel free to contact Daniel Fernandes for questions and/or suggestions - dani.mag.fernandes(at)gmail.com
+
+# Changelog
+27-06-2021
+Corrected missing " and wrong link to "pileup2ped.py" in "bam2plink.R"
+Removed duplicated SNP from support WGV files
