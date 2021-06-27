@@ -196,6 +196,5 @@ Feel free to contact Daniel Fernandes for questions and/or suggestions - dani.ma
 
 # Changelog
 27-06-2021
-
-Corrected missing " and wrong link to "pileup2ped.py" in "bam2plink.R"
-Removed duplicated SNP from support WGV files
+- Corrected missing " and wrong link to "pileup2ped.py" in "bam2plink.R"
+- Removed duplicated SNP from support WGV files
