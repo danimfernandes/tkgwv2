@@ -25,7 +25,7 @@ args = args[-length(args)]
 
 cat("\n ################################################################################")
 cat("\n ### TKGWV2 - An ancient DNA relatedness pipeline for ultra-low coverage data ###")
-cat("\n ## Version 1.0a - Released 06/2021)
+cat("\n ## Version 1.0a - Released 06/2021")
 cat("\n #")
 cat(paste0("\n # [",Sys.time(),"] ","Running 'bam2plink' on folder ", getwd()))
 cat("\n\t # BAM >> Pileup >> Text-PLINK ")
@@ -100,8 +100,8 @@ if(length(error1)>0) {
     ## Convert pileup to text-PLINK
     if(excludeTerminalReadBases == FALSE) { excludeTerminalReadBases = "False"}
     if(excludeTerminalReadBases == TRUE) { excludeTerminalReadBases = "True"}
-    if(file.exists(paste0(pywd,"/scripts/pileup2ped_updatedMay2021.py")) == F) {cat("\t # ERROR: File 'pileup2ped.py' could not be found in 'scripts' folder\n")} else {
-      comm3b = paste0(pywd,"/scripts/pileup2ped_updatedMay2021.py ",excludeTerminalReadBases)
+    if(file.exists(paste0(pywd,"/scripts/pileup2ped.py")) == F) {cat("\t # ERROR: File 'pileup2ped.py' could not be found in 'scripts' folder\n")} else {
+      comm3b = paste0(pywd,"/scripts/pileup2ped.py ",excludeTerminalReadBases)
       system(comm3b)
     }
   }
