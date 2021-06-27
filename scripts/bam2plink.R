@@ -107,4 +107,3 @@ if(length(error1)>0) {
   }
   cat(paste0(" # [",Sys.time(),"] All BAM files processed\n"))
 }
-
