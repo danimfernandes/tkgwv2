@@ -21,7 +21,7 @@ TKGWV2 was developed for Linux. The following software needs to be available as 
 As input, TKGWV2 can take either individual BAM or text-PLINK (ped/map) files .
 
 # Installation and pipeline
-Download and unzip this package. Keep the folder structure and make sure that all Python and R scripts are executable.
+Download and unzip this package. Keep the folder structure and make sure that all Python and R scripts have permissions and are executable.
 
     wget https://github.com/danimfernandes/tkgwv2/archive/refs/heads/master.zip 
     unzip master.zip
