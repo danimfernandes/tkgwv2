@@ -38,8 +38,8 @@ Depending on what input data you use, TKGWV2 will require different support file
 ***
 ### If starting from BAM files (orange point in diagram):
 1. The reference genome (fasta) to which the files were aligned to;
-2. A list of biallelic and non-fixed SNPs (bed) in 'bed' format, to generate Pileup information;
-3. A binary PLINK dataset (bed/bim/fam) covering the exact same positions as the 'bed' file, to generate the text-PLINK 'map' files.
+2. A list of biallelic and non-fixed SNPs (bed) in 'bed' format (chr pos pos), to generate Pileup information. Not to be confused with the PLINK dataset .bed file;
+3. A binary PLINK dataset (bed/bim/fam) covering the exact same positions as the 'bed' file from point 2, to generate the text-PLINK 'map' files.
 
 With these files, TKGWV2 will generate a set of text-PLINK files (ped/map) per individual. If you already have your data in PLINK format (e.g. from a 1240K dataset), you can convert it to individual text-PLINK sets and avoid running 'bam2plink.R'.
 ***
