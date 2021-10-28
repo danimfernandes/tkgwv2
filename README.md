@@ -7,7 +7,7 @@ From the initial suggested minimum coverage threshold of 0.1X, TKGWV2 can be app
 
 These characteristics have the potential to offer relatedness estimation during screening sequencing steps at early stages of an ancient DNA project, and can therefore be very useful for project planning.
 
-Although mainly designed and thoroughly tested for shotgun data, TKGWV2 also works with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided.
+Although mainly designed and thoroughly tested for shotgun data, TKGWV2 can also work with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided and some precautions are taken (see notes at the end of this document for more details).
 
 # Requirements
 ### Version 1.0a - Released 06/2021
@@ -163,28 +163,29 @@ We provide 4 R functions to help automate some situations you might come across 
 
 
 
-# Tips and suggestions
+# Tips, suggestions, and notes
 - *Downsample your data*<br/>
 In the TKGWV2 publication we showed that, with the genome-wide SNP set, from 15000 used SNPs the error rates were under 0.50%, therefore one of our main suggestions is to downsample your data for a more time-efficient analyses. When starting from BAM files, we showed that downsampling them to a maximum of 1.3-1.6 million reads per file was sufficient to obtain an average of 23000 used SNPs per pair, and consequently run TKGWV2 with very low error rates at a much higher speed than if larger BAM files were to be used.<br/><br/>
-Similarly, for 1240K data, 60-100K SNPs per individual produced pairwise estimates with average used SNPs between 2400-6700, and error rates between ~3 and <0.5%, respectively. Doing this on individuals with ~800K SNPs reduced the running time of 'plink2tkrelated' by 36 times, from 330 to 9 seconds, for 10 relationships.<br/><br/>
+Similarly, for 1240K data, 60-100K SNPs per individual produced pairwise estimates with average used SNPs between 2400-6700, and error rates between ~3 and <0.5%, respectively (based on simulated data). Doing this on individuals with ~800K SNPs reduced the running time of 'plink2tkrelated' by 36 times, from 330 to 9 seconds, for 10 relationships.<br/><br/>
 We provide 2 helper scripts to downsample BAM files and text-PLINK sets, so you can downsample whole-genome ('downsampleBam.R') and 1240K data ('downsamplePed.R'). Their default subsampling numbers are 1.5 million reads for BAM files, and 80K SNPs for 1240K text-PLINKs.
 
 - *Use simulations to get posterior probabilities for <15000 or <10000 SNPs*<br/>
 The estimated error rates when using the provided support files with genome-wide SNP set are at 3% for 10000 SNPs and 0.5% at 15000 SNPs, so we provide a helper script in order to see if these potentially less accurate estimates overlap with more than one relatedness class. This helper script runs simulations on the specific set of SNPs used to estimate that pair's relatedness. This information is contained in the files named as 'commInd1_Ind2.frq'.<br/><br/>
 The simulations will generate distribution ranges for the 3 relatedness classes, and use them them to calculate the probability of the pair's estimate to represent each class.<br/><br/>
 The R script for this, 'distSimulations.R', can be found in the folder 'helpers'.<br/><br/>
-*Note:* The 10-15000 SNPs thresold was identified for the provided genome-wide SNP set based on shotgun data, which likely includes less-informative variants than, for example, the curated 1240K SNP set. Consequently, for the latter, the minimum number of SNPs that would correspond to similar error rates of <1% are substantially lower at around 3000 SNPs instead of between 10-15000.
+*Note:* The 10-15000 SNPs thresold was identified for the provided genome-wide SNP set based on shotgun data, which likely includes less-informative variants than, for example, the curated 1240K SNP set. Consequently, for the latter, the minimum number of SNPs that would correspond to similar error rates of <1% are substantially lower at around 3000 SNPs instead of between 10-15000. However, the use of a curated SNP set might introduce small HRC biases that the user needs to take into consideration, especially for HRC estimates that are too close to the outer edges of a class's distribution range.
 
 - *Always run confirmation analysis and calculate error rates for previously untested datasets and frequencies*<br/>
 As mentioned above, it is important that the allele frequencies provided properly reflect the genetic composition of the ancient population the individuals being tested belonged to. Whether you use closely related modern populations or a large set of ancient individuals to obtain allele frequencies from, make sure to confirm that those frequencies are appropriate by testing the pipeline on previously published individuals from the same (or minimally closely related) population with known relationships.<br/><br/>
 This is an important caveat that needs to be considered, and might prove challenging for regions or periods for which there is a lack of published ancient relatives. <br/><br/>
 However, with the ongoing exponential increase in availability of both modern and aDNA data around the world, TKGWV2 can potentially be applied to the great majority of situations.<br/>
 
-   
-   
-   
-   
-   
+- *For when imperfect allele frequencies are used, try a normalization step*<br/>
+If the alelle frequencies used are not perfect or seem biased (based on comparisons with previously known relatives or based on a non-zero average of unrelated HRCs), it might be possible to correct the results by applying a normalization step like in READ (Monroy-Kuhn et al. 2018). As the theoretical average HRC for a set of unrelated individuals is supposed to be 0, the user can find the average HRC of all unrelated pairs and use that value (i.e. its deviation from 0) to correct the HRC estimates. 
+In most situations the unrelated average HRC is usually above 0, and suggest incorrect or biased allele frequencies, due to a lack of very low frequency (but not fixed) SNPs, or simply substantially different frequencies. Examples of these situations are the use of modern European allele frequencies on ancient hunter-gatherer individuals from Europe, as well as when using curated SNP sets such as the 1240K dataset (see next note).
+
+- *If you are using data restricted to a curated dataset, such as the 1240K SNP set*
+A curated SNP set such as the 1240K includes ancestry SNPs selected based on the existing variability of modern populations. Therefore, issues and biases such as the one mentioned in the previous note are more likely to happen in these capture sets, than when using whole-genome shotgun data. The introduced bias is likely small (HRC inflations of 0.02-0.03 have been observed), but can nevertheless produce false positives for HRC estimates that are too close to the other classes' distribution ranges. Therefore, providing allele frequencies from genetically close ancient population for these situations might be preferable, when available.
 
 
 
