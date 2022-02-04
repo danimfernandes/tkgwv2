@@ -196,6 +196,9 @@ Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: An ancient DNA rela
 Feel free to contact Daniel Fernandes for questions and/or suggestions - dani.mag.fernandes(at)gmail.com
 
 # Changelog
+04-02-2022
+- Fixed error in "plink2tkrelated.py" for dyads with 0 common SNPs
+- Small QOL changes to "plink2tkrelated.py" stdout, which is now also printing HRC values and skipped dyads
 27-06-2021
 - Corrected missing " and wrong link to "pileup2ped.py" in "bam2plink.R"
 - Removed duplicated SNP from support WGV files
