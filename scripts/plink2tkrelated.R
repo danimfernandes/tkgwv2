@@ -235,8 +235,8 @@ if(length(error1)>0) {
           if(is.na(relatednessR) == FALSE) {
             if(relatednessR < 0.0625) { degree = "Unrelated"}
             if(relatednessR >= 0.0625 && relatednessR < 0.1875) { degree = "2nd degree"}
-            if(relatednessR >= 0.1875 && relatednessR < 0.35) { degree = "1st degree"}
-            if(relatednessR > 0.40) { degree = "Same individual/Twins"}
+            if(relatednessR >= 0.1875 && relatednessR < 0.3126) { degree = "1st degree"}
+            if(relatednessR >= 0.3126) { degree = "Same individual/Twins"}
             ## Append to toExport table
             if(relatednessR == 1) {toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),sprintf("%.4f", round(relatednessR,digits=4)),table(pairLoadNewRxy$IacADbcBD)[[1]],"0",degree)
             } else {toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),sprintf("%.4f", round(relatednessR,digits=4)),table(pairLoadNewRxy$IacADbcBD)[[1]],table(pairLoadNewRxy$IacADbcBD)[[2]],degree)}
