@@ -152,17 +152,60 @@ We provide 4 R functions to help automate some situations you might come across 
 - 'simsForErrorRates.R' can be used to generate simulated distribution curves over a set of increasing SNP numbers in order to assess error rates and SNP thresholds for an input plink frequencies file (frq). The output is an error rates vs SNPs plot and a text file with the data used to generate it. A gray vertical line is drawn at the lowest number of SNPs tested with an average error <=1%. The text file is a concatenation of the tables of values for 1st degree, 2nd degree, and Unrelated, with the SNP number as the first column, and the general header as the number of simulations. 
 
 
+# Description and generation of support files
+For the genome-wide application of TKGWV2 a few support files are required, as described above. For the 1240K application, only a PLINK frequency file (FRQ) from the reference population(s) of interest is required.
 
+- *Genome-wide support files*<br/>
+To generate Pileups with _samtools mpileup_, a list of <ins>biallelic</ins>, <ins>non-fixed</ins>, and <ins>unique SNPs</ins>, in 'bed' format (chr pos-1 pos) is required:
+```
+1 10538 10539
+1 11007 11008
+1 11011 11012
+1 13109 13110
+1 13115 13116
+(...)
+```
+These positions can initially be obtained from the 1000 Genomes VCF files (e.g. http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/), using _bcftools_, and QCed down the line to exclude unwanted variants. Be sure to avoid fixed SNPs, SNPs with different names but same genomic positions, insertions, deletions, etc.:
+```
+#Note: Dummy coordinates and SNPids in PLINK's 'bim' file format
+1       rs000000000     0       11111   A       C
+1       ss111111111     0       11111   G       C
 
-# Generation of own support files
-- TODO
+3       rs222222222     0       22222   G       GAAA
+8       rs333333333     0       33333   AATTAG       AATT
+14       rs444444444;rs55555555     0       44444   A       G
+```
 
+Then, to help generate the individual 'map' files, a binary PLINK dataset covering the <ins>exact</ins> same positions as the 'bed' file above is needed. PLINK's _--vcf_ can be used to convert from VCF.GZ to binary PLINK. For increased efficiency and speed, we suggest to generate this dataset with a single individual.
 
+'bim' file:
+```
+1       rs537182016     0       10539   A       C
+1       rs575272151     0       11008   G       C
+1       rs544419019     0       11012   G       C
+1       rs540538026     0       13110   A       G
+1       rs62635286      0       13116   G       T
+(...)
+```
 
+'fam' file:
+```
+HG00096 HG00096 0 0 0 -9
+```
+Lastly, after isolating the individuals from the relevant population to source the allele frequencies from - again for the <ins>exact</ins> same positions as in the other files - the FRQ file can be obtained using PLINK's _--frq_ argument:
+```
+1   rs537182016    A    C     0.000994     1006
+1   rs575272151    G    C      0.08847     1006
+1   rs544419019    G    C      0.08847     1006
+1   rs540538026    A    G      0.05666     1006
+1    rs62635286    G    T       0.1869     1006
+```
 
+- *1240K support files*<br/>
+The required FRQ file is likely to be easily retrievable with PLINK's _--frq_ argument from available datasets such as the Allen Ancient DNA Resource (AADR), curated by the Reich Lab in Harvard:<br/>
+https://reich.hms.harvard.edu/allen-ancient-dna-resource-aadr-downloadable-genotypes-present-day-and-ancient-dna-data.
 
-
-
+ 
 # Tips, suggestions, and notes
 - *Downsample your data*<br/>
 In the TKGWV2 publication we showed that, with the genome-wide SNP set, from 15000 used SNPs the error rates were under 0.50%, therefore one of our main suggestions is to downsample your data for a more time-efficient analyses. When starting from BAM files, we showed that downsampling them to a maximum of 1.3-1.6 million reads per file was sufficient to obtain an average of 23000 used SNPs per pair, and consequently run TKGWV2 with very low error rates at a much higher speed than if larger BAM files were to be used.<br/><br/>
@@ -191,7 +234,7 @@ A curated SNP set such as the 1240K includes ancestry SNPs selected based on the
 
 
 # Citation and contact
-Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: An ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data (2021). bioRxiv.
+Fernandes, DM, Cheronet, O, Gelabert, P, Pinhasi, R. TKGWV2: an ancient DNA relatedness pipeline for ultra-low coverage whole genome shotgun data. Sci Rep 11, 21262 (2021). https://doi.org/10.1038/s41598-021-00581-3
 
 Feel free to contact Daniel Fernandes for questions and/or suggestions - dani.mag.fernandes(at)gmail.com
 
