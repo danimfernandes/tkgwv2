@@ -413,8 +413,11 @@ axis(1,thins,lwd=0,lwd.ticks=1, cex.axis = 1.8)
 mtext("SNPs used", side=1, line=3.3, cex=1.8)
 box()
 
-color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
-colUse = sample(color, length(simSeqs))
+#color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+#colUse = sample(color, length(simSeqs))
+library(RColorBrewer)
+colUse = brewer.pal(length(simSeqs), "Accent")
+
 cit=1
 for(sim in simSeqs) {
   lines(x = df1$SNPs,y = df1[,paste(sim)], lty = 3, lwd = 2, col = colUse[cit])
