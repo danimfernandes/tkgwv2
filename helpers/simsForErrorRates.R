@@ -416,7 +416,7 @@ box()
 #color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 #colUse = sample(color, length(simSeqs))
 library(RColorBrewer)
-colUse = brewer.pal(length(simSeqs), "Accent")
+colUse = brewer.pal(length(simSeqs), "Paired")
 
 cit=1
 for(sim in simSeqs) {
