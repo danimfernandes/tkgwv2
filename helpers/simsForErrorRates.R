@@ -428,5 +428,5 @@ if(length(as.vector(which(rowMeans(df2[,2:length(colnames(df2))]) < 0.01))) != 0
   abline(v=df2[as.vector(which(rowMeans(df2[,2:length(colnames(df2))]) < 0.01))[1],1],col="grey65",lwd=2)
 }
 
-legend("topright",legend = c("# Simulations",c(paste(simSeqs)),"","Unrelated","2nd-degree","1st-degree"), lty = c(NA,rep(NA,length(simSeqs)),NA,1,2,3), pch = c(NA,rep(22,length(simSeqs)),NA,NA,NA,NA), pt.cex = 5.5, cex = 1.8, pt.bg=colUse)
+legend("topright",legend = c("# Simulations",c(paste(simSeqs)),"","Unrelated","2nd-degree","1st-degree"), lty = c(NA,rep(NA,length(simSeqs)),NA,1,2,3), pch = c(NA,rep(22,length(simSeqs)),NA,NA,NA,NA), pt.cex = 5.5, cex = 1.8, pt.bg=c(NA,colUse))
 dev.off()
