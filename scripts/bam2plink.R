@@ -25,7 +25,7 @@ args = args[-length(args)]
 
 cat("\n ################################################################################")
 cat("\n ### TKGWV2 - An ancient DNA relatedness pipeline for ultra-low coverage data ###")
-cat("\n ## Version 1.0a - Released 06/2021")
+cat("\n ## Version 1.0b - Released 07/2022")
 cat("\n #")
 cat(paste0("\n # [",Sys.time(),"] ","Running 'bam2plink' on folder ", getwd()))
 cat("\n\t # BAM >> Pileup >> Text-PLINK ")
