@@ -23,8 +23,8 @@ if "bam2plink" in argList:
 if "plink2tkrelated" in argList:
 	argList.remove("plink2tkrelated")
 
-short_options = "hr:L:e:p:m:b:tf:d:i:"
-long_options = ["help", "referenceGenome=", "gwvList=", "bamExtension=", "gwvPlink=", "minMQ=", "minBQ=", "excludeTerminalReadBases", "freqFile=", "dyads=", "ignoreThresh="]
+short_options = "hr:L:e:p:m:b:tf:d:i:v"
+long_options = ["help", "referenceGenome=", "gwvList=", "bamExtension=", "gwvPlink=", "minMQ=", "minBQ=", "excludeTerminalReadBases", "freqFile=", "dyads=", "ignoreThresh=", "verbose"]
 
 try:
     options, args = getopt.getopt(argList, short_options, long_options)
@@ -37,7 +37,7 @@ plink2tkrelatedArgs = []
 for opt, value in options:
 	if opt in ['-h', '--help']:
 		print("""TKGWV2.py 
-Version 1.0a - Released 06/2021
+Version 1.0b - Released 07/2022
 
 Utilities and options:
   bam2plink  
@@ -60,6 +60,7 @@ Utilities and options:
     [optional arguments]
     - d, --dyads                      <path> Tab-spaced text file with each specified pair to be analysed per line, otherwise will run on every possible pair. Useful when analysing temporal or geographically distant pairs (as long as both are within the variation captured by the --freqFile)
     - i, --ignoreThresh               <int> Default 1. Threshold for the minimum number of SNPs allowed to estimate relatedness
+    - v, --verbose                    Use verbose mode and print extended information throughout file processing
 
 Example run command:
   $ ./TKGWV2.py bam2plink --referenceGenome full_karyo.fa --gwvList 1000GP3_22M_noFixed_noChr.bed --bamExtension final.bam --gwvPlink DummyDataset_EUR_22M_noFixed plink2tkrelated --freqFile 1000GP3_EUR_22M_noFixed.frq""")
@@ -84,6 +85,8 @@ Example run command:
 		plink2tkrelatedArgs.append("=".join(["--dyads",value]))
 	elif opt in ['-i', '--ignoreThresh']:
 		plink2tkrelatedArgs.append("=".join(["--ignoreThresh",value]))
+	elif opt in ['-v', '--verbose']:
+		plink2tkrelatedArgs.append("--verbose")
 
 if len(bam2plinkArgs) > 0 and "bam2plink" not in sys.argv:
 	print("\n Warning: Arguments for unused 'bam2plink' found. Will be ignored.")
