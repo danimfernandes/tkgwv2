@@ -10,7 +10,7 @@ These characteristics have the potential to offer relatedness estimation during 
 Although mainly designed and thoroughly tested for shotgun data, TKGWV2 can also work with, for example, the widely-used 1240K capture set, as long as adequate allele frequencies are provided and some precautions are taken (see notes at the end of this document for more details).
 
 # Requirements
-### Version 1.0a - Released 06/2021
+### Version 1.0b - Released 07/2022
 TKGWV2 was developed for Linux. The following software needs to be available as system-wide installations:
 - Python 3
 - PLINK 1.9
@@ -77,6 +77,7 @@ TKGWV2 includes R, Python, and Bash code. The two main utilities - 'bam2plink' a
         [optional arguments]
         - d, --dyads                      <path> Tab-spaced text file with each specified pair to be analysed per line, otherwise will run on every possible pair. Useful when analysing temporal or geographically distant pairs (as long as both are within the variation captured by the --freqFile)
         - i, --ignoreThresh               <int> Default 1. Threshold for the minimum number of SNPs allowed to estimate relatedness
+        - v, --verbose                    Use verbose mode and print extended information throughout file processing
 
 <br/>
 
@@ -144,7 +145,7 @@ TKGWV2 is only able to detect 1st and 2nd degree relationships due to their typi
 ***Disclaimer:*** For these reasons, TKGWV2 does not include 3rd degree relationship estimation, and all real 3rd degree relatives will be assigned as 2nd degree or Unrelated, depending on whether their HRC value is above or below 0.0625, respectively. In the TKGWV2 manuscript we showed that 3rd degree relatives tend to have an HRC between 0.0625 and ~0.090, so you might want to consider referring to any result within this interval as “2nd- or 3rd-degree” to cover this possibility. This interval was obtained based on only 11 3rd-degree relatives, therefore is only informative. Furthermore, it relies on the their correct assessment per the original publication.
 
 # Helper scripts
-We provide 4 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
+We provide 5 R functions to help automate some situations you might come across while preparing your data for TKGWV2 or analysing the results.
 - 'downsampleBam.R' can be used to downsample BAM files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
 - 'downsamplePed.R' can be used to downsample text-PLINK files for faster processing. Check the 'Tips and suggestions' section below for more details on this.
 - 'individualisePlink.R' can be used to extract and convert all samples from a binary PLINK dataset into individual text-PLINK sets (ped/map). This is useful, for example, if you want to use TKGWV2 on 1240K data. After running this function you can run TKGWV2 directly from 'plink2tkrelated'.
@@ -240,9 +241,15 @@ Feel free to contact Daniel Fernandes for questions and/or suggestions - dani.ma
 
 # Changelog
 
+12-07-2022
+- Added verbose mode (and other small changes in code order) in "plink2tkrelated.R" for easier error identification
+- Added early file-checking in "plink2tkrelated.R" before starting any analysis
+- Fixed bug in "plink2tkrelated.R" when using --dyads that was showing all samples in folder as being used, although only dyads were being tested
+- Small QOL changes to "plink2tkrelated.R", now also printing the number of used SNPs for each dyad
+
 04-02-2022
-- Fixed error in "plink2tkrelated.py" for dyads with 0 common SNPs
-- Small QOL changes to "plink2tkrelated.py" stdout, which is now also printing HRC values and skipped dyads
+- Fixed error in "plink2tkrelated.R" for dyads with 0 common SNPs
+- Small QOL changes to "plink2tkrelated.R" stdout, which is now also printing HRC values and skipped dyads
 
 27-06-2021
 - Corrected missing " and wrong link to "pileup2ped.py" in "bam2plink.R"
