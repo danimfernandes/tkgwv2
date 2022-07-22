@@ -90,7 +90,7 @@ cat("\t # Arguments used:\n")
 for(i in gsub("=","\t",args)) { cat(paste0("\t\t ",i,"\n"))}
 cat("\n")
 
-if(length(list.files(pattern = paste0("^",freqFile,"$"))) == 0) {
+if(file.exists(freqFile) == FALSE) {
   cat(paste0("\t # ERROR: The frequencies file ",freqFile," could not be found\n")); quit()
 }
 
