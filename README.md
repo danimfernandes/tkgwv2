@@ -229,7 +229,7 @@ plink --bfile FooDataset_noDups --freq --out FooDataset_noDups --allow-no-sex --
 ```
 Lastly, at this stage, the user can also reduce the dimension of the dataset to include a single individual (and preferably using PLINK's argument --keep-allele-order), in order to speed up TKGWV2.
 
-Another issue that has been seen arises from using unusual chromosome codes, as by default they are not accepted by PLINK (which is used for severak steps of TKGWV2). If this is the case with your data, and you don't want to exclude these chromosomes, the current workaround is to manually edit every PLINK command in 'bam2plink.R' and 'plink2tkrelated.R' and add at the end the --allow-extra-chr flag.
+Another issue that has been seen arises from using unusual chromosome codes, as by default they are not accepted by PLINK (which is used for several steps of TKGWV2). If this is the case with your data, and you don't want to exclude these chromosomes, the current workaround is to manually edit every PLINK command in 'bam2plink.R' and 'plink2tkrelated.R' and add at the end the --allow-extra-chr flag.
 
 - *1240K support files*<br/>
 The required FRQ file is likely to be easily retrievable with PLINK's _--frq_ argument from available datasets such as the Allen Ancient DNA Resource (AADR), curated by the Reich Lab in Harvard:<br/>
