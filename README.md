@@ -166,7 +166,7 @@ To generate Pileups with _samtools mpileup_, a list of <ins>biallelic</ins>, <in
 1 13115 13116
 (...)
 ```
-These positions can initially be obtained from the 1000 Genomes VCF files (e.g. http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/), using _bcftools_, and QCed down the line to exclude unwanted variants. Be sure to avoid fixed SNPs, SNPs with different names but same genomic positions, insertions, deletions, etc.:
+These positions can initially be obtained from the 1000 Genomes VCF files (e.g. http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/), using _bcftools_, and QCed down the line to exclude unwanted variants. Be sure to avoid fixed SNPs, multiple SNP entries for the same genomic position, SNPs with same names (e.g. non-specific "."), insertions, deletions, etc.:
 ```
 #Note: Dummy coordinates and SNPids in PLINK's 'bim' file format
 1       rs000000000     0       11111   A       C
@@ -177,7 +177,7 @@ These positions can initially be obtained from the 1000 Genomes VCF files (e.g. 
 14       rs444444444;rs55555555     0       44444   A       G
 ```
 
-Then, to help generate the individual 'map' files, a binary PLINK dataset covering the <ins>exact</ins> same positions as the 'bed' file above is needed. PLINK's _--vcf_ can be used to convert from VCF.GZ to binary PLINK. For increased efficiency and speed, we suggest to generate this dataset with a single individual.
+Then, to help generate the individual 'map' files, a binary PLINK dataset covering the <ins>exact</ins> same positions as the 'bed' file above is needed. PLINK's _--vcf_ can be used to convert from VCF.GZ to binary PLINK. 
 
 'bim' file:
 ```
@@ -201,6 +201,34 @@ Lastly, after isolating the individuals from the relevant population to source t
 1   rs540538026    A    G      0.05666     1006
 1    rs62635286    G    T       0.1869     1006
 ```
+For increased efficiency and speed, we suggest to convert this dataset to have a single individual after the allele frequencies file has been produced.
+
+### Troubleshooting when generating own support files<br/>
+Most causes of errors seen so far when the user has produced their own files arise from the inclusion of SNPs that do not follow the rules mentioned above. For example, each genomic position is only allowed a single bi-allelic SNP, and each SNP ID must be unique, so the following cases will produce file mismatches and errors during 'bam2plink':
+```
+1 rs549010975 0 9176790 C A
+1 rs549010975 0 9176790 G A
+
+12 ss1388102190 0 9513044 A C
+12 ss1388102191 0 9513044 T C
+
+16 rs12922580 0 13379320 C T
+16 rs12922580 0 13379327 G T
+```
+The user can use the following commands to find and exclude these cases in their dataset's BIM file:
+```
+awk '{print $2}' FooDataset.bim | uniq -d > DuplicatedSNPids
+plink --bfile FooDataset --exclude DuplicatedSNPids --make-bed --out FooDataset_noDupIds --allow-no-sex --keep-allele-order
+awk '{print $1"-"$4}' FooDataset_noDupIds.bim | uniq -d 
+```
+
+
+
+```
+plink --bfile 1KG_EUR --exclude file --make-bed --out 1KG_EUR_noDups --allow-no-sex --allow-extra-chr --keep-allele-order
+awk '{print $1"\t"$4-1"\t"$4}' 1KG_EUR_noDups.bim > SNP_pos_1KG_noDups.bed
+```
+
 
 - *1240K support files*<br/>
 The required FRQ file is likely to be easily retrievable with PLINK's _--frq_ argument from available datasets such as the Allen Ancient DNA Resource (AADR), curated by the Reich Lab in Harvard:<br/>
