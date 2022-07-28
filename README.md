@@ -218,17 +218,18 @@ Most causes of errors seen so far when the user has produced their own files ari
 The user can use the following commands to find and exclude these cases in their dataset's BIM file:
 ```
 awk '{print $2}' FooDataset.bim | uniq -d > DuplicatedSNPids
-plink --bfile FooDataset --exclude DuplicatedSNPids --make-bed --out FooDataset_noDupIds --allow-no-sex --keep-allele-order
-awk '{print $1"-"$4}' FooDataset_noDupIds.bim | uniq -d 
+plink --bfile FooDataset --exclude DuplicatedSNPids --make-bed --out TempDataset --allow-no-sex --keep-allele-order
+awk '{print $1" "$4}' TempDataset.bim | uniq -d | awk '{print $1,$2,$2,NR}' > DuplicatedPositionsRange
+plink --bfile TempDataset --exclude range DuplicatedPositionsRange --make-bed --out FooDataset_noDups --allow-no-sex --keep-allele-order
 ```
-
-
-
+A new 'gwvList' BED file, and a new 'freqFile' FRQ file for 'plink2tkrelated', can then be generated using:
 ```
-plink --bfile 1KG_EUR --exclude file --make-bed --out 1KG_EUR_noDups --allow-no-sex --allow-extra-chr --keep-allele-order
-awk '{print $1"\t"$4-1"\t"$4}' 1KG_EUR_noDups.bim > SNP_pos_1KG_noDups.bed
+awk '{print $1"\t"$4-1"\t"$4}' FooDataset_noDups.bim > SNP_pos_noDups.bed
+plink --bfile FooDataset_noDups --freq --out FooDataset_noDups --allow-no-sex --keep-allele-order
 ```
+Lastly, at this stage, the user can also reduce the dimension of the dataset to include a single individual (and using PLINK's arguments --allow-no-sex --keep-allele-order), in order to speed up TKGWV2.
 
+Another issue that has been seen arises from using unusual chromosome codes, as by default they are not accepted by PLINK (which is used for severak steps of TKGWV2). If this is the case with your data, and you don't want to exclude these chromosomes, the current workaround is to manually edit every PLINK command in 'bam2plink.R' and 'plink2tkrelated.R' and add at the end the --allow-extra-chr flag.
 
 - *1240K support files*<br/>
 The required FRQ file is likely to be easily retrievable with PLINK's _--frq_ argument from available datasets such as the Allen Ancient DNA Resource (AADR), curated by the Reich Lab in Harvard:<br/>
