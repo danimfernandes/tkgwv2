@@ -227,7 +227,7 @@ A new 'gwvList' BED file, and a new 'freqFile' FRQ file for 'plink2tkrelated', c
 awk '{print $1"\t"$4-1"\t"$4}' FooDataset_noDups.bim > SNP_pos_noDups.bed
 plink --bfile FooDataset_noDups --freq --out FooDataset_noDups --allow-no-sex --keep-allele-order
 ```
-Lastly, at this stage, the user can also reduce the dimension of the dataset to include a single individual (and using PLINK's arguments --allow-no-sex --keep-allele-order), in order to speed up TKGWV2.
+Lastly, at this stage, the user can also reduce the dimension of the dataset to include a single individual (and preferably using PLINK's argument --keep-allele-order), in order to speed up TKGWV2.
 
 Another issue that has been seen arises from using unusual chromosome codes, as by default they are not accepted by PLINK (which is used for severak steps of TKGWV2). If this is the case with your data, and you don't want to exclude these chromosomes, the current workaround is to manually edit every PLINK command in 'bam2plink.R' and 'plink2tkrelated.R' and add at the end the --allow-extra-chr flag.
 
