@@ -215,7 +215,7 @@ Most causes of errors seen so far when the user has produced their own files ari
 16 rs12922580 0 13379320 C T
 16 rs12922580 0 13379327 G T
 ```
-The user can use the following commands to find and exclude these cases in their dataset's BIM file:
+The user can use the following commands to find and exclude these cases in their dataset:
 ```
 awk '{print $2}' FooDataset.bim | uniq -d > DuplicatedSNPids
 plink --bfile FooDataset --exclude DuplicatedSNPids --make-bed --out TempDataset --allow-no-sex --keep-allele-order
