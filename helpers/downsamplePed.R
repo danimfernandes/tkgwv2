@@ -1,9 +1,9 @@
 ### Downsize text-PLINK (ped/map) for faster analysis
 ### Author - Daniel Fernandes
 ### Instructions:
-### There are no mandatory arguments that need input information, but if you want to edit any, do so on line 26, and run the whole code afterwards.
+### There are no mandatory arguments that need input information, but if you want to edit any, do so on line 28, and run the whole code afterwards.
 
-downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled") {
+downsamplePed = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled") {
   # Description of arguments #
   # downsampleN = Default 80000. Maximum number of SNPs to downsample text-PLINK dataset to
   # extensionPed = Default "\\.ped$". Work on PED/MAP files with this extension/suffix
@@ -23,4 +23,7 @@ downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDo
   }
 }
 
-downsamplePED(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled")
+# Call the function if this script is at the root of the stack (i.e. not called as a source file)
+if (sys.nframe() == 0) {
+  downsamplePed(downsampleN = 80000, extensionPed = "\\.ped$", suffixDownPed = "_subsampled")
+}
