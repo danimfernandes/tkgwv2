@@ -18,7 +18,7 @@ downsamplePED = function(downsampleN = 80000, extensionPed = "\\.ped$", suffixDo
     } else if(mapLen > downsampleN) {
       rat2 = downsampleN
     }
-    comm1 = paste0("plink --file ",sid," --thin-count ",rat2," --recode --out ",sid,suffixDownPed," --allow-no-sex --keep-allele-order")
+    comm1 = paste0("plink --file ",sid," --thin-count ",as.integer(sprintf("%f", rat2))," --recode --out ",sid,suffixDownPed," --allow-no-sex --keep-allele-order")
     system(comm1)
   }
 }
