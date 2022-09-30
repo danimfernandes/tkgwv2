@@ -70,21 +70,21 @@ for i in os.listdir(cwd):
 									del listBases[indexi:(indexi+int(delL)+2)] # delete indel annotation
 									del listBases[indexi-1] # delete indel
 
-						## Remove start and end of read calls is requested (^ and $)
+						## Remove start and end markers (^ and $) and read calls if requested 
 						while r"^" in listBases:
 							for i in listBases:
 								if i == r"^":
 									indexi = listBases.index(r"^")
 									del listBases[indexi] # delete ^
 									del listBases[indexi] # delete the base quality after the ^
-									if exclTerminals == 'True':
-										del listBases[indexi] # delete the actual variant 
+									if exclTerminals == 'True' and len(listBases) > 0:
+										del listBases[indexi-1] # delete the actual variant 
 						while r"$" in listBases:
 							for i in listBases:
 								if i == r"$":
 									indexi = listBases.index(r"$")
 									del listBases[indexi] # delete $
-									if exclTerminals == 'True':
+									if exclTerminals == 'True' and len(listBases) > 0:
 										del listBases[indexi-1] # delete the actual variant 
 
 						if len(listBases) != 0:
