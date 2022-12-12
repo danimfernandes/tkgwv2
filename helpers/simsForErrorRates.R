@@ -23,6 +23,7 @@ simsPair = function(freqFile, numSimPairs=2500, unrelated=TRUE, fullsibs=TRUE, h
   alFreq$NCHROBS=NULL
   ## Remove SNPs with fixed alleles or missing data
   alFreq = alFreq[alFreq$MAF != 0,]
+  alFreq = alFreq[is.na(alFreq$MAF) != TRUE,]
   alFreq$AFa2=format((1-as.numeric(alFreq$MAF)),digits=3)
   alFreq[5]=lapply(alFreq[5],round,3)
   ##Work with 3 decimal places for frequencies and make sure MAF+AFa2=1
