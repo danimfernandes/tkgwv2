@@ -76,6 +76,7 @@ def format_args_to_R(name, value):
         |  list=["a", "b", "c"]  |  list=c("a", "b", "c")  |
         |  bool=True             |  bool=TRUE              |
         |  string="\\.bam$"      |  string="\\.bam$"       |
+        |  value=None            |  value=NULL             |
 
     """
     def python_to_r(value):
@@ -92,6 +93,11 @@ def format_args_to_R(name, value):
             r_value = r'"{}"'.format(value.name)
         elif argtype in [int, float]:
             r_value = value
+        elif value is None:
+            r_value = "NULL"
+
+        else:
+            raise RuntimeError("Failed to parse '{}' into a valid R value".format(value))
         return r_value
 
     return r"{}={}".format(name, python_to_r(value))
@@ -229,6 +235,14 @@ def build_parser():
         type=str,
         default="_subsampled",
         metavar="str"
+    )
+
+    downsample_bam_parser.add_argument(
+        '--downsampleSeed',
+        help="Optionally set seeding for samtool's subsampling.",
+        type=int,
+        default=None,
+        metavar="n"
     )
 
     # Build subparser for downsamplePed.R
