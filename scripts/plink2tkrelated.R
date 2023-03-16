@@ -120,7 +120,7 @@ for(line in seq(1:length(combos[,1]))) {
     system(comm7, ignore.stdout = TRUE, ignore.stderr = TRUE)
     
     #Generate shorter FRQ file
-    comm8 = paste0("awk '{print $2",'" "',"}' ",samp1,"____",samp2,".tped > comm",samp1,"_",samp2,"_SNPs2")
+    comm8 = paste0("awk '{print $2}' ",samp1,"____",samp2,".tped > comm",samp1,"_",samp2,"_SNPs2")
     system(comm8)
     if(verbose == TRUE) {  cat(paste0("\t###### Number of common SNPs after QC1: ", as.integer(strsplit(system(paste0("wc -l comm",samp1,"_",samp2,"_SNPs2"), intern=T)," ")[[1]][1])),"\n") }
     #Get frequencies from .frq file
