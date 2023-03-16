@@ -58,7 +58,9 @@ if(dyads == TRUE) {
     samp = as.character(strsplit(i,"\\.ped"))
     list_samples = c(list_samples,samp)
   }
-  combos = data.frame(t(combn(list_samples,2)),stringsAsFactors = F)
+  if(length(list_samples) < 2) {
+    cat("\n\t # ERROR: Less than 2 '.ped' files found in current folder. A minimum of 2 samples is required\n"); quit()
+  } else {combos = data.frame(t(combn(list_samples,2)),stringsAsFactors = F)}
 } else {
   combos = read.table(dyads,header = F, stringsAsFactors = F)
 }
