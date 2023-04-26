@@ -162,7 +162,11 @@ for(line in seq(1:length(combos[,1]))) {
       pairLoadNew$al1freq = alFreqNew$MAF
       pairLoadNew$al2freq = alFreqNew$AFa2
     } 
-    
+
+    if (!all(pairLoadNew$V1 == alFreqNew$CHR)) {
+      stop("Invalid chromosome sort order between allele frequencies and output tped file. Ensure your input dataset is numerically sorted across chromosomes and try again.")
+    }
+
     ## Remove SNPs with fixed alleles
     pairLoadNew = pairLoadNew[pairLoadNew$al1freq != 0,]
     ## Remove SNPs with no data on .FRQ file

@@ -83,7 +83,11 @@ if(length(error1)>0) {
       ## Generate pileup using samtools
       commA = paste0("samtools mpileup -Q ",minBQ," -q ",minMQ," -B -f ",referenceGenome," -l ",gwvList," ",i," > ",sid,".pileupsamtools.gwv.txt")
       system(commA, ignore.stderr=T)
-      
+
+      # ---- Sort pileup in numerical order (using version-sort)
+      commB = paste0("sort -Vo ", sid, ".pileupsamtools.gwv.txt -k1 -k2 ", sid, ".pileupsamtools.gwv.txt")
+      system(commB, ignore.stderr = TRUE)
+
       ## Convert sample positions to PLINK's range format ### INSTANTANEOUS
       comm2 = paste0("sed 's/chr//' ",sid,".pileupsamtools.gwv.txt | awk '{print $1,$2,$2,NR}' > ",sid,".plinkRange")
       system(comm2)
