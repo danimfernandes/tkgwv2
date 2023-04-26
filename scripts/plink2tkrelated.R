@@ -158,7 +158,7 @@ for(line in seq(1:length(combos[,1]))) {
     alFrequNewSAFE = alFreqNew
     
     ## Add allele frequency data to main dataframe
-    if((length(pairLoadNew$V2) == length(alFreqNew$SNP)) == TRUE) {
+    if((length(pairLoadNew$V1) == length(alFreqNew$CHR)) == TRUE) {
       pairLoadNew$A1Mi = alFreqNew$A1
       pairLoadNew$A2Ma = alFreqNew$A2
       pairLoadNew$al1freq = alFreqNew$MAF
