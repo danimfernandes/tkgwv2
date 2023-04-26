@@ -58,7 +58,9 @@ if(dyads == TRUE) {
     samp = as.character(strsplit(i,"\\.ped"))
     list_samples = c(list_samples,samp)
   }
-  combos = data.frame(t(combn(list_samples,2)),stringsAsFactors = F)
+  if(length(list_samples) < 2) {
+    cat("\n\t # ERROR: Less than 2 '.ped' files found in current folder. A minimum of 2 samples is required\n"); quit()
+  } else {combos = data.frame(t(combn(list_samples,2)),stringsAsFactors = F)}
 } else {
   combos = read.table(dyads,header = F, stringsAsFactors = F)
 }
@@ -118,7 +120,7 @@ for(line in seq(1:length(combos[,1]))) {
     system(comm7, ignore.stdout = TRUE, ignore.stderr = TRUE)
     
     #Generate shorter FRQ file
-    comm8 = paste0("awk '{print $2",'" "',"}' ",samp1,"____",samp2,".tped > comm",samp1,"_",samp2,"_SNPs2")
+    comm8 = paste0("awk '{print $2}' ",samp1,"____",samp2,".tped > comm",samp1,"_",samp2,"_SNPs2")
     system(comm8)
     if(verbose == TRUE) {  cat(paste0("\t###### Number of common SNPs after QC1: ", as.integer(strsplit(system(paste0("wc -l comm",samp1,"_",samp2,"_SNPs2"), intern=T)," ")[[1]][1])),"\n") }
     #Get frequencies from .frq file
