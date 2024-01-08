@@ -278,8 +278,8 @@ for(line in seq(1:length(combos[,1]))) {
         if(relatednessR >= 0.1875 && relatednessR < 0.3126) { degree = "1st degree"}
         if(relatednessR >= 0.3126) { degree = "Same individual/Twins"}
         ## Append to toExport table
-        if(relatednessR == 1) {toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),sprintf("%.4f", round(relatednessR,digits=4)),table(pairLoadNewRxy$IacADbcBD)[[1]],"0",degree)
-        } else {toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),sprintf("%.4f", round(relatednessR,digits=4)),table(pairLoadNewRxy$IacADbcBD)[[1]],table(pairLoadNewRxy$IacADbcBD)[[2]],degree)}
+        if(relatednessR == 1) {toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),sprintf("%.4f", round(relatednessR,digits=4)),length(which(pairLoadNewRxy$IacADbcBD %in% 0)),"0",degree)
+        } else {toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),sprintf("%.4f", round(relatednessR,digits=4)),length(which(pairLoadNewRxy$IacADbcBD %in% 0)),length(which(pairLoadNewRxy$IacADbcBD %in% 4)),degree)}
       } else if(is.na(relatednessR) == TRUE) { toExport[line,] = c(samp1,samp2,length(pairLoadNewRxy$snp),"NA","0","0","NA") } 
     }
   } else if(file.size(paste0("comm",samp1,"_",samp2,"_SNPs")) == 0) {
