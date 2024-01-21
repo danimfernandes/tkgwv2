@@ -158,13 +158,17 @@ for(line in seq(1:length(combos[,1]))) {
     alFrequNewSAFE = alFreqNew
     
     ## Add allele frequency data to main dataframe
-    if((length(pairLoadNew$V2) == length(alFreqNew$SNP)) == TRUE) {
+    if((length(pairLoadNew$V1) == length(alFreqNew$CHR)) == TRUE) {
       pairLoadNew$A1Mi = alFreqNew$A1
       pairLoadNew$A2Ma = alFreqNew$A2
       pairLoadNew$al1freq = alFreqNew$MAF
       pairLoadNew$al2freq = alFreqNew$AFa2
     } 
-    
+
+    if (!all(pairLoadNew$V1 == alFreqNew$CHR)) {
+      stop("Invalid chromosome sort order between allele frequencies and output tped file. Ensure your input dataset is numerically sorted across chromosomes and try again.")
+    }
+
     ## Remove SNPs with fixed alleles
     pairLoadNew = pairLoadNew[pairLoadNew$al1freq != 0,]
     ## Remove SNPs with no data on .FRQ file

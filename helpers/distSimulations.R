@@ -1,7 +1,7 @@
 ### Calculate distribution ranges for the provided allele frequencies and calculate posterior probabilities for each class
 ### Author - Daniel Fernandes (with posterior probability code by John Finarelli from 'tkrelated' package of Fernandes et al. 2017 - doi:10.1038/srep41529)
 ### Instructions:
-### On line 494, you need to provide input for at least the compulsory argument 'sampleVec' when calling the function. Run the whole code afterwards.
+### On line 507, you need to provide input for at least the compulsory argument 'sampleVec' when calling the function. Run the whole code afterwards.
 
 distSimulations = function(sampleVec, numSimPairs=2000, freqFileHeader = FALSE) {
   # Description of arguments #
@@ -22,7 +22,18 @@ distSimulations = function(sampleVec, numSimPairs=2000, freqFileHeader = FALSE) 
     
     ## Read allele frequencies
     alFreq = read.csv(file,stringsAsFactors=FALSE,sep="",colClasses = c(character(),character(),character(),character(),numeric(),numeric()),header=freqFileHeader)
-    if(freqFileHeader == FALSE){      colnames(alFreq) = c("CHR", "SNP", "A1",  "A2",  "MAF", "NCHROBS") }
+    expected_colnames <- c("CHR", "SNP", "A1",  "A2",  "MAF", "NCHROBS")
+    if(freqFileHeader == FALSE){      colnames(alFreq) = expected_colnames}
+    # Ensure the colnames are expected before further manipulations.
+    if (!all(colnames(alFreq) == expected_colnames)) {
+      err_msg = paste(c(
+        "\nThe provided frequency file", file, "contains an unexpected",
+        "header:\n\t", colnames(alFreq), "\nEnsure the header of your file",
+        "is as follows when using 'freqFileHeader':", expected_colnames,
+        "\n\n"
+      ), collapse=" ")
+      stop(err_msg)
+    }
     if(length(which(0 == alFreq$A2)) > 0){      alFreq = alFreq[-which(0 == alFreq$A2),] }
     alFreq$NCHROBS=NULL
     ## Remove SNPs with fixed alleles or missing data
@@ -469,7 +480,7 @@ distSimulations = function(sampleVec, numSimPairs=2000, freqFileHeader = FALSE) 
     }
     
     likelihoods = exp(log.like)
-    post.probs = sprintf("%.3f",(as.numeric(likelihoods/(sum(likelihoods)))),3)
+    post.probs = sprintf("%.3f",(as.numeric(likelihoods/(sum(likelihoods)))))
     
     counter = 1
     for(i in exi) {
@@ -489,6 +500,9 @@ distSimulations = function(sampleVec, numSimPairs=2000, freqFileHeader = FALSE) 
     }
     dev.off()
   }
-}  
+}
 
-distSimulations(sampleVec = c("commMySamp1____MySamp2.frq", "commMySamp1____MySamp3.frq"))
+# Call the function if this script is at the root of the stack (i.e. not called as a source file)
+if (sys.nframe() == 0) {
+  distSimulations(sampleVec = c("commMySamp1____MySamp2.frq", "commMySamp1____MySamp3.frq"))
+}

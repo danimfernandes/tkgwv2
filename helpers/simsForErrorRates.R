@@ -374,63 +374,70 @@ simsPair = function(freqFile, numSimPairs=2500, unrelated=TRUE, fullsibs=TRUE, h
   if( suffix == FALSE) {
     suffix = ""
   }
-  return(list(c(fullSib_vec,halfSib_vec,unrelated_vec),c(round(length(which(fullSib_vec < 0.1875)) / sim,digits = 5),round((length(which(halfSib_vec > 0.1875)) + length(which(halfSib_vec < 0.0625))) / sim,digits = 5),round(length(which(unrelated_vec > 0.0625)) / sim,digits = 5))))
+  return(list(c(fullSib_vec,halfSib_vec,unrelated_vec),c(round(length(which(fullSib_vec < 0.1875)) / numSimPairs,digits = 5),round((length(which(halfSib_vec > 0.1875)) + length(which(halfSib_vec < 0.0625))) / numSimPairs,digits = 5),round(length(which(unrelated_vec > 0.0625)) / numSimPairs,digits = 5))))
 }
 
-df1 = data.frame(matrix(nrow = length(thins),ncol = length(simSeqs)+1))
-colnames(df1) = c("SNPs/Sims",simSeqs)
-df2 = data.frame(matrix(nrow = length(thins),ncol = length(simSeqs)+1))
-colnames(df2) = c("SNPs/Sims",simSeqs)
-dfU = data.frame(matrix(nrow = length(thins),ncol = length(simSeqs)+1))
-colnames(dfU) = c("SNPs/Sims",simSeqs)
-counter = 1
-for(i in thins) {
-  comm1 = paste0("shuf -n ",i," ",freqsFi," > Freqs_",i,"sub.frq")
-  system(comm1)
-  freqsNew = paste0("Freqs_",i,"sub.frq")
-  print(paste0("SNPS: ",i))
-  df1[counter,"SNPs/Sims"] = i
-  df2[counter,"SNPs/Sims"] = i
-  dfU[counter,"SNPs/Sims"] = i
- 
-  for(sim in simSeqs) {
-    print(paste0("Simulated relationships: ",sim))
-    errorRates = simsPair(freqFile = freqsNew, numSimPairs = sim, suffix = paste0(i,"SNP_",sim))
-    
-    df1[counter,paste(sim)] = errorRates[[2]][1]
-    df2[counter,paste(sim)] = errorRates[[2]][2]
-    dfU[counter,paste(sim)] = errorRates[[2]][3]
+simsForErrorRates <- function(freqsFi, thins, simSeqs) {
+  df1 = data.frame(matrix(nrow = length(thins),ncol = length(simSeqs)+1))
+  colnames(df1) = c("SNPs/Sims",simSeqs)
+  df2 = data.frame(matrix(nrow = length(thins),ncol = length(simSeqs)+1))
+  colnames(df2) = c("SNPs/Sims",simSeqs)
+  dfU = data.frame(matrix(nrow = length(thins),ncol = length(simSeqs)+1))
+  colnames(dfU) = c("SNPs/Sims",simSeqs)
+  counter = 1
+  for(i in thins) {
+    comm1 = paste0("shuf -n ",i," ",freqsFi," > Freqs_",i,"sub.frq")
+    system(comm1)
+    freqsNew = paste0("Freqs_",i,"sub.frq")
+    print(paste0("SNPS: ",i))
+    df1[counter,"SNPs/Sims"] = i
+    df2[counter,"SNPs/Sims"] = i
+    dfU[counter,"SNPs/Sims"] = i
+   
+    for(sim in simSeqs) {
+      print(paste0("Simulated relationships: ",sim))
+      errorRates = simsPair(freqFile = freqsNew, numSimPairs = sim, suffix = paste0(i,"SNP_",sim))
+      
+      df1[counter,paste(sim)] = errorRates[[2]][1]
+      df2[counter,paste(sim)] = errorRates[[2]][2]
+      dfU[counter,paste(sim)] = errorRates[[2]][3]
+    }
+    counter = counter + 1
   }
-  counter = counter + 1
+  
+  write.table(rbind("1stD",df1,"2ndD",df2,"Unr",dfU),"SimulationErrorRates.txt", sep="\t", col.names = T, row.names = F, quote = F)
+  pdf(file = "SimulationErrorRates.pdf",width = 10, height = 8, pointsize = 1)
+  par(mar = c(5,5,1,1))
+  plot(-1,type = "b",xlim = c(0,max(thins)), ylim = c(0,0.5), xlab="",ylab="",axes = F)
+  axis(2,c(0,0.05,0.10,0.15,0.20,0.25,0.30,0.35,0.4,0.45,0.5),lwd=0,lwd.ticks = 1, cex.axis =1.8, cex.lab = 2)
+  mtext("Fraction of erroneously assigned relationships", side=2, line=3.3, cex=1.8)
+  axis(1,thins,lwd=0,lwd.ticks=1, cex.axis = 1.8)
+  mtext("SNPs used", side=1, line=3.3, cex=1.8)
+  box()
+  
+  #color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+  #colUse = sample(color, length(simSeqs))
+  library(RColorBrewer)
+  colUse = brewer.pal(length(simSeqs), "Paired")
+  
+  cit=1
+  for(sim in simSeqs) {
+    lines(x = df1$SNPs,y = df1[,paste(sim)], lty = 3, lwd = 2, col = colUse[cit])
+    lines(x = df2$SNPs,y = df2[,paste(sim)], lty = 2, lwd = 2, col = colUse[cit])
+    lines(x = dfU$SNPs,y = dfU[,paste(sim)], lty = 1, lwd = 2, col = colUse[cit])
+    cit = cit+1
+  }
+  
+  abline(h=0.01,lty=3)
+  if(length(as.vector(which(rowMeans(df2[,2:length(colnames(df2))]) < 0.01))) != 0) {
+    abline(v=df2[as.vector(which(rowMeans(df2[,2:length(colnames(df2))]) < 0.01))[1],1],col="grey65",lwd=2)
+  }
+  
+  legend("topright",legend = c("# Simulations",c(paste(simSeqs)),"","Unrelated","2nd-degree","1st-degree"), lty = c(NA,rep(NA,length(simSeqs)),NA,1,2,3), pch = c(NA,rep(22,length(simSeqs)),NA,NA,NA,NA), pt.cex = 5.5, cex = 1.8, pt.bg=c(NA,colUse))
+  dev.off()
 }
 
-write.table(rbind("1stD",df1,"2ndD",df2,"Unr",dfU),"SimulationErrorRates.txt", sep="\t", col.names = T, row.names = F, quote = F)
-pdf(file = "SimulationErrorRates.pdf",width = 10, height = 8, pointsize = 1)
-par(mar = c(5,5,1,1))
-plot(-1,type = "b",xlim = c(0,max(thins)), ylim = c(0,0.5), xlab="",ylab="",axes = F)
-axis(2,c(0,0.05,0.10,0.15,0.20,0.25,0.30,0.35,0.4,0.45,0.5),lwd=0,lwd.ticks = 1, cex.axis =1.8, cex.lab = 2)
-mtext("Fraction of erroneously assigned relationships", side=2, line=3.3, cex=1.8)
-axis(1,thins,lwd=0,lwd.ticks=1, cex.axis = 1.8)
-mtext("SNPs used", side=1, line=3.3, cex=1.8)
-box()
-
-#color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
-#colUse = sample(color, length(simSeqs))
-library(RColorBrewer)
-colUse = brewer.pal(length(simSeqs), "Paired")
-
-cit=1
-for(sim in simSeqs) {
-  lines(x = df1$SNPs,y = df1[,paste(sim)], lty = 3, lwd = 2, col = colUse[cit])
-  lines(x = df2$SNPs,y = df2[,paste(sim)], lty = 2, lwd = 2, col = colUse[cit])
-  lines(x = dfU$SNPs,y = dfU[,paste(sim)], lty = 1, lwd = 2, col = colUse[cit])
-  cit = cit+1
+# Call the function if this script is at the root of the stack (i.e. not called as a source file)
+if (sys.nframe() == 0) {
+  simsForErrorRates(freqsFi=freqsFi, thins=thins, simSeqs=simSeqs)
 }
-
-abline(h=0.01,lty=3)
-if(length(as.vector(which(rowMeans(df2[,2:length(colnames(df2))]) < 0.01))) != 0) {
-  abline(v=df2[as.vector(which(rowMeans(df2[,2:length(colnames(df2))]) < 0.01))[1],1],col="grey65",lwd=2)
-}
-
-legend("topright",legend = c("# Simulations",c(paste(simSeqs)),"","Unrelated","2nd-degree","1st-degree"), lty = c(NA,rep(NA,length(simSeqs)),NA,1,2,3), pch = c(NA,rep(22,length(simSeqs)),NA,NA,NA,NA), pt.cex = 5.5, cex = 1.8, pt.bg=c(NA,colUse))
-dev.off()
